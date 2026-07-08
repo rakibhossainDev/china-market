@@ -16,8 +16,8 @@ const categoryGroups = [
     id: 2,
     title: "Stylish Jewelry",
     items: [
-      { name: "Necklaces", image: "https://images.unsplash.com/photo-1599643478514-4a520230f878?q=80&w=400&auto=format&fit=crop" },
-      { name: "Rings", image: "https://images.unsplash.com/photo-1605100804763-247f67b454bf?q=80&w=400&auto=format&fit=crop" },
+      { name: "Necklaces", image: "https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?w=400&auto=format&fit=crop&q=80" },
+      { name: "Rings", image: "https://images.unsplash.com/photo-1605100804763-247f67b3557e?w=400&auto=format&fit=crop&q=80" },
       { name: "Earrings", image: "https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?q=80&w=400&auto=format&fit=crop" },
       { name: "Bracelets", image: "https://images.unsplash.com/photo-1611591437281-460bfbe1220a?q=80&w=400&auto=format&fit=crop" },
     ]

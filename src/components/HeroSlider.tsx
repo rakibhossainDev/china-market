@@ -62,36 +62,6 @@ export default function HeroSlider() {
                 className="absolute inset-0 bg-cover bg-center"
                 style={{ backgroundImage: `url(${slide.image})` }}
               ></div>
-              
-              {/* Sleek Dark Overlay */}
-              <div className="absolute inset-0 bg-gradient-to-r from-black/80 to-black/30 pointer-events-none"></div>
-              
-              <div className="w-full h-full flex flex-col justify-center relative z-10 py-2 md:py-0">
-                <div className="w-full max-w-md md:max-w-4xl px-4 sm:px-8 mx-auto text-left space-y-1.5 md:space-y-4">
-                  <span className="inline-block py-1 px-3 rounded-full bg-black/40 border border-white/20 text-amber-400 text-[10px] sm:text-xs font-bold tracking-wide uppercase backdrop-blur-sm">
-                    B2B E-Commerce Platform
-                  </span>
-                  
-                  <h1 className="text-lg sm:text-2xl md:text-4xl font-bold tracking-tight text-white drop-shadow-md leading-tight">
-                    {slide.title} <span className="text-amber-500">{slide.highlight}</span>
-                  </h1>
-                  
-                  <div className="bg-black/30 p-2 sm:p-4 rounded-lg border border-white/10 inline-block backdrop-blur-md max-w-2xl">
-                    <p className="text-[10px] sm:text-sm md:text-lg text-blue-100 font-light leading-relaxed line-clamp-2 sm:line-clamp-none">
-                      {slide.subtitle}
-                    </p>
-                  </div>
-                  
-                  <div className="flex flex-col space-y-1.5 sm:flex-row sm:space-y-0 sm:space-x-4 pt-1 sm:pt-2">
-                    <button className="w-full max-w-[200px] sm:max-w-[220px] bg-amber-500 hover:bg-amber-600 text-blue-950 font-bold text-center py-1.5 sm:py-2 px-3 sm:px-4 text-[10px] sm:text-sm md:text-base rounded-lg shadow-lg shadow-amber-500/30 transition-all hover:-translate-y-1">
-                      Explore Wholesale Catalog
-                    </button>
-                    <button className="w-full max-w-[200px] sm:max-w-[220px] bg-white/10 hover:bg-white/20 border border-white/30 text-white font-semibold text-center py-1.5 sm:py-2 px-3 sm:px-4 text-[10px] sm:text-sm md:text-base rounded-lg transition-all backdrop-blur-sm">
-                      Request Custom Quote
-                    </button>
-                  </div>
-                </div>
-              </div>
             </div>
           ))}
         </div>
