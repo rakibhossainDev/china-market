@@ -17,11 +17,11 @@ export default function Sidebar({ isOpen, setIsOpen }: { isOpen: boolean; setIsO
       
       {/* Sidebar Content */}
       <aside 
-        className={`fixed inset-y-0 left-0 z-50 w-64 bg-blue-900 text-white transform transition-transform duration-300 ease-in-out md:relative md:translate-x-0 ${isOpen ? 'translate-x-0' : '-translate-x-full'}`}
+        className={`fixed left-0 top-0 z-50 h-full w-64 bg-slate-900 text-white transform transition-transform duration-300 ease-in-out ${isOpen ? 'translate-x-0' : '-translate-x-full'} md:translate-x-0`}
       >
-        <div className="flex items-center justify-between h-20 px-6 border-b border-blue-800">
+        <div className="flex items-center justify-between h-20 px-6 border-b border-slate-800">
           <div className="flex items-center gap-2">
-            <div className="w-8 h-8 bg-amber-500 rounded flex items-center justify-center font-bold text-blue-900 text-lg">
+            <div className="w-8 h-8 bg-amber-500 rounded flex items-center justify-center font-bold text-slate-900 text-lg">
               CM
             </div>
             <span className="font-bold text-xl tracking-tight">China Market</span>
@@ -38,7 +38,7 @@ export default function Sidebar({ isOpen, setIsOpen }: { isOpen: boolean; setIsO
               <Link 
                 key={link.label}
                 href={link.href}
-                className="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-blue-800 transition-colors text-blue-100 hover:text-white font-medium"
+                className="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-slate-800 transition-colors text-slate-300 hover:text-white font-medium"
                 onClick={() => setIsOpen(false)}
               >
                 {Icon && <Icon className="h-5 w-5" />}
