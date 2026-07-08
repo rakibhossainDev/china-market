@@ -1,6 +1,7 @@
 import { Package, ShieldCheck, Plane, Tags, Headset, Zap } from 'lucide-react';
 import Link from 'next/link';
 import HeroSlider from '@/components/HeroSlider';
+import HorizontalCategoryGroups from '@/components/HorizontalCategoryGroups';
 
 const trendingProducts = [
   {
@@ -76,30 +77,8 @@ export default function Home() {
         {/* 1. Hero Slider */}
         <HeroSlider />
 
-        {/* 2. Category Grid */}
-        <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-16">
-          <div className="flex items-center justify-between mb-8">
-            <h2 className="text-2xl md:text-3xl font-bold text-slate-900">Top Wholesale Categories</h2>
-            <Link href="#" className="text-blue-600 font-semibold hover:text-blue-800 transition-colors text-sm md:text-base">
-              View All &rarr;
-            </Link>
-          </div>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
-            {['Electronics', 'Fashion', 'Gadgets', 'Home Appliances'].map((category, i) => (
-              <div key={i} className="group cursor-pointer rounded-2xl overflow-hidden bg-white shadow-sm border border-slate-100 hover:shadow-xl transition-all duration-300">
-                <div className="aspect-square bg-slate-100 relative overflow-hidden">
-                  <div className="absolute inset-0 flex items-center justify-center text-slate-400 group-hover:scale-110 transition-transform duration-500">
-                    <Package className="h-12 w-12 md:h-16 md:w-16 opacity-20" />
-                  </div>
-                </div>
-                <div className="p-4 md:p-5 text-center">
-                  <h3 className="font-bold text-base md:text-lg text-slate-900 group-hover:text-blue-600 transition-colors">{category}</h3>
-                  <p className="text-xs md:text-sm text-slate-500 mt-1">1,000+ Products</p>
-                </div>
-              </div>
-            ))}
-          </div>
-        </section>
+        {/* 2. Custom Category Groups Slider */}
+        <HorizontalCategoryGroups />
 
         {/* 3. Trending Wholesale Products */}
         <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-16">
