@@ -1,6 +1,7 @@
 import { supabase } from '@/lib/supabase';
 
 export const revalidate = 0;
+export const dynamic = 'force-dynamic';
 
 export default async function AdminDashboard() {
   const { count: productCount } = await supabase.from('products').select('*', { count: 'exact', head: true });
