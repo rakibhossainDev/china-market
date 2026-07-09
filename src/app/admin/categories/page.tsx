@@ -17,7 +17,7 @@ export default function AdminCategoriesPage() {
   const [newCategoryIcon, setNewCategoryIcon] = useState('');
 
   const [newSubName, setNewSubName] = useState('');
-  const [newSubImage, setNewSubImage] = useState('');
+  const [newSubImageFile, setNewSubImageFile] = useState<File | null>(null);
   const [newSubCategoryId, setNewSubCategoryId] = useState('');
   const [isSubmittingSub, setIsSubmittingSub] = useState(false);
 
@@ -71,9 +71,31 @@ export default function AdminCategoriesPage() {
 
   const handleAddSubCategory = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!newSubName.trim() || !newSubCategoryId) return;
+    if (!newSubName.trim() || !newSubCategoryId || !newSubImageFile) return;
+    
+    if (newSubImageFile.size > 200 * 1024) {
+      alert("Image exceeds 200KB limit.");
+      return;
+    }
     
     setIsSubmittingSub(true);
+    
+    const fileExt = newSubImageFile.name.split('.').pop() || 'png';
+    const fileName = `sub-${Date.now()}.${fileExt}`;
+    const filePath = `subcategories/${fileName}`;
+    
+    const { error: uploadError } = await supabase.storage
+      .from('products')
+      .upload(filePath, newSubImageFile);
+      
+    if (uploadError) {
+      console.error("Upload error:", uploadError);
+      alert("Failed to upload image.");
+      setIsSubmittingSub(false);
+      return;
+    }
+    
+    const { data: { publicUrl } } = supabase.storage.from('products').getPublicUrl(filePath);
     
     const slug = newSubName.trim().toLowerCase().replace(/[^a-z0-9]+/g, '-');
 
@@ -81,7 +103,7 @@ export default function AdminCategoriesPage() {
       slug: slug,
       category_id: newSubCategoryId,
       name: newSubName.trim(),
-      image_url: newSubImage.trim()
+      image_url: publicUrl
     }]);
 
     setIsSubmittingSub(false);
@@ -91,7 +113,7 @@ export default function AdminCategoriesPage() {
       alert(error.message || "Failed to add sub-category");
     } else {
       setNewSubName('');
-      setNewSubImage('');
+      setNewSubImageFile(null);
       setNewSubCategoryId('');
       fetchCategories();
       router.refresh();
@@ -177,23 +199,22 @@ export default function AdminCategoriesPage() {
               </div>
 
               <div>
-                <label className="block text-slate-400 mb-1.5">Image URL</label>
+                <label className="block text-slate-400 mb-1.5">Image (Max 200KB)</label>
                 <input 
-                  type="text" 
-                  value={newSubImage} 
-                  onChange={(e) => setNewSubImage(e.target.value)} 
+                  type="file" 
+                  accept="image/*" 
+                  onChange={(e) => setNewSubImageFile(e.target.files?.[0] || null)} 
                   required
-                  placeholder="https://..." 
-                  className="w-full bg-slate-950 border border-slate-800 rounded-lg px-4 py-2.5 text-white focus:outline-none focus:border-amber-500 transition-colors" 
+                  className="w-full bg-slate-950 border border-slate-800 rounded-lg px-4 py-2.5 text-slate-400 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-amber-500/10 file:text-amber-500 hover:file:bg-amber-500/20" 
                 />
               </div>
 
               <button 
                 type="submit" 
-                disabled={isSubmittingSub || !newSubName.trim() || !newSubCategoryId} 
+                disabled={isSubmittingSub || !newSubName.trim() || !newSubCategoryId || !newSubImageFile} 
                 className="w-full bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold py-2.5 rounded-lg transition-colors disabled:opacity-50 flex justify-center items-center gap-2"
               >
-                {isSubmittingSub ? 'Creating...' : <><Plus className="w-4 h-4" /> Add Sub-Category</>}
+                {isSubmittingSub ? 'Uploading Image...' : <><Plus className="w-4 h-4" /> Add Sub-Category</>}
               </button>
             </form>
           </div>
