@@ -46,15 +46,8 @@ const categoryGroups = [
 
 export default function HorizontalCategoryGroups() {
   return (
-    <section className="py-8 bg-slate-50">
+    <section className="pb-8 bg-slate-50">
       <div className="max-w-7xl mx-auto">
-        <div className="flex items-center justify-between px-4 sm:px-6 lg:px-8 mb-4">
-          <h2 className="text-xl md:text-2xl font-bold text-slate-900">Explore Collections</h2>
-          <Link href="#" className="text-blue-600 font-semibold hover:text-blue-800 transition-colors text-sm md:text-base">
-            View All &rarr;
-          </Link>
-        </div>
-
         <div className="flex overflow-x-auto space-x-4 px-4 sm:px-6 lg:px-8 pb-4 scrollbar-hide snap-x snap-mandatory">
           {categoryGroups.map((group) => (
             <div 

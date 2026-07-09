@@ -46,7 +46,7 @@ export default function HeroSlider() {
 
   return (
     <div className="w-full px-4 pt-4 md:px-0 md:pt-0 mb-6 md:mb-10 transition-all duration-300 ease-in-out">
-      <section className="relative overflow-hidden group h-[220px] md:h-[380px] lg:h-[420px] w-full rounded-[5px] shadow-sm transition-all duration-300 ease-in-out">
+      <section className="relative overflow-hidden group h-[140px] sm:h-[180px] md:h-[260px] lg:h-[300px] w-full rounded-[5px] shadow-sm transition-all duration-300 ease-in-out">
         {/* Slides Container */}
         <div 
           className="flex transition-transform duration-700 ease-in-out h-full w-full"
