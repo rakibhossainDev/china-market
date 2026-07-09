@@ -98,20 +98,18 @@ function SidebarContent({ isOpen, setIsOpen, isDesktopExpanded, setIsDesktopExpa
   return (
     <>
       {/* Mobile Drawer Overlay */}
-      {isOpen && (
-        <div 
-          className="fixed inset-0 bg-black/50 z-40 md:hidden transition-opacity" 
-          onClick={() => setIsOpen(false)}
-        />
-      )}
+      <div 
+        className={`fixed inset-0 bg-black/60 z-40 md:hidden transition-opacity duration-300 ${isOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'}`} 
+        onClick={() => setIsOpen(false)}
+      />
       
       {/* Sidebar Content */}
       <aside 
-        className={`fixed left-0 top-0 z-50 h-full bg-slate-900 text-white transform transition-all duration-300 ease-in-out flex flex-col 
+        className={`fixed left-0 top-0 z-50 h-full bg-slate-900 text-white shadow-2xl transform transition-transform md:transition-all duration-300 ease-in-out flex flex-col 
           ${isOpen ? 'translate-x-0' : '-translate-x-full'} 
           md:translate-x-0 
           ${isDesktopExpanded ? 'md:w-64' : 'md:w-16'}
-          w-64
+          w-[280px] sm:w-[320px]
         `}
       >
         <div className={`flex items-center h-20 border-b border-slate-800 shrink-0 transition-all duration-300 ease-in-out ${isDesktopExpanded ? 'px-6 justify-between' : 'px-6 justify-between md:px-0 md:justify-center'}`}>
