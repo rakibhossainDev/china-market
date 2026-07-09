@@ -15,8 +15,8 @@ export default async function HorizontalCategoryGroups() {
 
   const categoryGroups = await Promise.all(
     categories.map(async (cat) => {
-      const { data: products } = await supabase
-        .from('products')
+      const { data: subCats } = await supabase
+        .from('sub_categories')
         .select('*')
         .eq('category_id', cat.id)
         .limit(4);
@@ -24,9 +24,9 @@ export default async function HorizontalCategoryGroups() {
       return {
         id: cat.id,
         title: `${cat.name} Collection`,
-        items: (products || []).map(p => ({
-          name: p.title,
-          image: p.image_url
+        items: (subCats || []).map(s => ({
+          name: s.name,
+          image: s.image_url || 'https://via.placeholder.com/150'
         }))
       };
     })

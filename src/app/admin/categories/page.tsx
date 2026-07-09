@@ -16,6 +16,11 @@ export default function AdminCategoriesPage() {
   const [newCategoryName, setNewCategoryName] = useState('');
   const [newCategoryIcon, setNewCategoryIcon] = useState('');
 
+  const [newSubName, setNewSubName] = useState('');
+  const [newSubImage, setNewSubImage] = useState('');
+  const [newSubCategoryId, setNewSubCategoryId] = useState('');
+  const [isSubmittingSub, setIsSubmittingSub] = useState(false);
+
   useEffect(() => {
     fetchCategories();
   }, []);
@@ -64,6 +69,35 @@ export default function AdminCategoriesPage() {
     }
   };
 
+  const handleAddSubCategory = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!newSubName.trim() || !newSubCategoryId) return;
+    
+    setIsSubmittingSub(true);
+    
+    const slug = newSubName.trim().toLowerCase().replace(/[^a-z0-9]+/g, '-');
+
+    const { error } = await supabase.from('sub_categories').insert([{
+      slug: slug,
+      category_id: newSubCategoryId,
+      name: newSubName.trim(),
+      image_url: newSubImage.trim()
+    }]);
+
+    setIsSubmittingSub(false);
+
+    if (error) {
+      console.error("Error adding sub-category:", error);
+      alert(error.message || "Failed to add sub-category");
+    } else {
+      setNewSubName('');
+      setNewSubImage('');
+      setNewSubCategoryId('');
+      fetchCategories();
+      router.refresh();
+    }
+  };
+
   return (
     <div className="space-y-8">
       <div className="flex justify-between items-center bg-slate-900 p-6 rounded-xl border border-slate-800 shadow-sm">
@@ -71,43 +105,98 @@ export default function AdminCategoriesPage() {
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-        {/* Add Category Form */}
-        <div className="lg:col-span-1 bg-slate-900 border border-slate-800 rounded-xl p-6 shadow-sm h-fit">
-          <h2 className="text-xl font-bold text-white mb-6">Create Category</h2>
-          <form onSubmit={handleAddCategory} className="space-y-5 text-sm">
-            <div>
-              <label className="block text-slate-400 mb-1.5">Category Name</label>
-              <input 
-                type="text" 
-                value={newCategoryName} 
-                onChange={(e) => setNewCategoryName(e.target.value)} 
-                required 
-                placeholder="e.g., Electronics" 
-                className="w-full bg-slate-950 border border-slate-800 rounded-lg px-4 py-2.5 text-white focus:outline-none focus:border-amber-500 transition-colors" 
-              />
-              <p className="text-xs text-slate-500 mt-1.5">A slug ID will be automatically generated.</p>
-            </div>
-            
-            <div>
-              <label className="block text-slate-400 mb-1.5">Icon Name (Optional)</label>
-              <input 
-                type="text" 
-                value={newCategoryIcon} 
-                onChange={(e) => setNewCategoryIcon(e.target.value)} 
-                placeholder="e.g., Monitor" 
-                className="w-full bg-slate-950 border border-slate-800 rounded-lg px-4 py-2.5 text-white focus:outline-none focus:border-amber-500 transition-colors" 
-              />
-              <p className="text-xs text-slate-500 mt-1.5">Lucide icon name to display in the sidebar.</p>
-            </div>
+        <div className="lg:col-span-1 space-y-8">
+          {/* Add Category Form */}
+          <div className="bg-slate-900 border border-slate-800 rounded-xl p-6 shadow-sm h-fit">
+            <h2 className="text-xl font-bold text-white mb-6">Create Category</h2>
+            <form onSubmit={handleAddCategory} className="space-y-5 text-sm">
+              <div>
+                <label className="block text-slate-400 mb-1.5">Category Name</label>
+                <input 
+                  type="text" 
+                  value={newCategoryName} 
+                  onChange={(e) => setNewCategoryName(e.target.value)} 
+                  required 
+                  placeholder="e.g., Electronics" 
+                  className="w-full bg-slate-950 border border-slate-800 rounded-lg px-4 py-2.5 text-white focus:outline-none focus:border-amber-500 transition-colors" 
+                />
+                <p className="text-xs text-slate-500 mt-1.5">A slug ID will be automatically generated.</p>
+              </div>
+              
+              <div>
+                <label className="block text-slate-400 mb-1.5">Icon Name (Optional)</label>
+                <input 
+                  type="text" 
+                  value={newCategoryIcon} 
+                  onChange={(e) => setNewCategoryIcon(e.target.value)} 
+                  placeholder="e.g., Monitor" 
+                  className="w-full bg-slate-950 border border-slate-800 rounded-lg px-4 py-2.5 text-white focus:outline-none focus:border-amber-500 transition-colors" 
+                />
+                <p className="text-xs text-slate-500 mt-1.5">Lucide icon name to display in the sidebar.</p>
+              </div>
 
-            <button 
-              type="submit" 
-              disabled={isSubmitting || !newCategoryName.trim()} 
-              className="w-full bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold py-2.5 rounded-lg transition-colors disabled:opacity-50 flex justify-center items-center gap-2"
-            >
-              {isSubmitting ? 'Creating...' : <><Plus className="w-4 h-4" /> Add Category</>}
-            </button>
-          </form>
+              <button 
+                type="submit" 
+                disabled={isSubmitting || !newCategoryName.trim()} 
+                className="w-full bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold py-2.5 rounded-lg transition-colors disabled:opacity-50 flex justify-center items-center gap-2"
+              >
+                {isSubmitting ? 'Creating...' : <><Plus className="w-4 h-4" /> Add Category</>}
+              </button>
+            </form>
+          </div>
+
+          {/* Add Sub-Category Form */}
+          <div className="bg-slate-900 border border-slate-800 rounded-xl p-6 shadow-sm h-fit">
+            <h2 className="text-xl font-bold text-white mb-6">Create Sub-Category</h2>
+            <form onSubmit={handleAddSubCategory} className="space-y-5 text-sm">
+              <div>
+                <label className="block text-slate-400 mb-1.5">Parent Category</label>
+                <select 
+                  value={newSubCategoryId} 
+                  onChange={(e) => setNewSubCategoryId(e.target.value)} 
+                  required 
+                  className="w-full bg-slate-950 border border-slate-800 rounded-lg px-4 py-2.5 text-white focus:outline-none focus:border-amber-500 transition-colors appearance-none"
+                >
+                  <option value="">Select Category</option>
+                  {categories.map(c => (
+                    <option key={c.id} value={c.id}>{c.name}</option>
+                  ))}
+                </select>
+              </div>
+
+              <div>
+                <label className="block text-slate-400 mb-1.5">Sub-Category Name</label>
+                <input 
+                  type="text" 
+                  value={newSubName} 
+                  onChange={(e) => setNewSubName(e.target.value)} 
+                  required 
+                  placeholder="e.g., Smart Watches" 
+                  className="w-full bg-slate-950 border border-slate-800 rounded-lg px-4 py-2.5 text-white focus:outline-none focus:border-amber-500 transition-colors" 
+                />
+              </div>
+
+              <div>
+                <label className="block text-slate-400 mb-1.5">Image URL</label>
+                <input 
+                  type="text" 
+                  value={newSubImage} 
+                  onChange={(e) => setNewSubImage(e.target.value)} 
+                  required
+                  placeholder="https://..." 
+                  className="w-full bg-slate-950 border border-slate-800 rounded-lg px-4 py-2.5 text-white focus:outline-none focus:border-amber-500 transition-colors" 
+                />
+              </div>
+
+              <button 
+                type="submit" 
+                disabled={isSubmittingSub || !newSubName.trim() || !newSubCategoryId} 
+                className="w-full bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold py-2.5 rounded-lg transition-colors disabled:opacity-50 flex justify-center items-center gap-2"
+              >
+                {isSubmittingSub ? 'Creating...' : <><Plus className="w-4 h-4" /> Add Sub-Category</>}
+              </button>
+            </form>
+          </div>
         </div>
 
         {/* Categories List */}
