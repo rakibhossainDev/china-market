@@ -8,8 +8,10 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
           <h2 className="text-xl font-bold text-amber-500">Admin Dashboard</h2>
         </div>
         <nav className="flex-1 p-4 space-y-2">
-          <Link href="/admin" className="block px-4 py-2 rounded-lg hover:bg-slate-800 hover:text-white transition-colors">Overview</Link>
-          <Link href="/admin/products" className="block px-4 py-2 rounded-lg hover:bg-slate-800 hover:text-white transition-colors">Products</Link>
+          <Link href="/admin" className="block px-4 py-2 rounded-lg hover:bg-slate-800 hover:text-white transition-colors">Dashboard Overview</Link>
+          <Link href="/admin/categories" className="block px-4 py-2 rounded-lg hover:bg-slate-800 hover:text-white transition-colors">Manage Categories</Link>
+          <Link href="/admin/products" className="block px-4 py-2 rounded-lg hover:bg-slate-800 hover:text-white transition-colors">Products Management</Link>
+          <Link href="/admin/orders" className="block px-4 py-2 rounded-lg hover:bg-slate-800 hover:text-white transition-colors">Orders</Link>
           <div className="pt-4 mt-4 border-t border-slate-800">
              <Link href="/" className="block px-4 py-2 rounded-lg text-slate-400 hover:bg-slate-800 hover:text-white transition-colors">Back to Storefront</Link>
           </div>
