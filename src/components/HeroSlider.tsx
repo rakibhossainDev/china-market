@@ -45,23 +45,24 @@ export default function HeroSlider() {
   }, []);
 
   return (
-    <div className="w-full px-4 pt-4 md:px-0 md:pt-0">
-      <section className="relative overflow-hidden group h-[220px] sm:h-[380px] md:h-[500px] w-full rounded-[5px]">
+    <div className="w-full px-4 pt-4 md:px-0 md:pt-0 mb-6 md:mb-10 transition-all duration-300 ease-in-out">
+      <section className="relative overflow-hidden group h-[220px] md:h-[380px] lg:h-[420px] w-full rounded-[5px] shadow-sm transition-all duration-300 ease-in-out">
         {/* Slides Container */}
         <div 
-          className="flex transition-transform duration-700 ease-in-out h-full"
+          className="flex transition-transform duration-700 ease-in-out h-full w-full"
           style={{ transform: `translateX(-${currentSlide * 100}%)` }}
         >
           {slides.map((slide) => (
             <div 
               key={slide.id} 
-              className="min-w-full flex-shrink-0 flex items-center relative bg-slate-900"
+              className="min-w-full h-full flex-shrink-0 flex items-center relative bg-slate-900"
             >
-              {/* Background Image */}
-              <div 
-                className="absolute inset-0 bg-cover bg-center"
-                style={{ backgroundImage: `url(${slide.image})` }}
-              ></div>
+              {/* Image Element for better scaling and cropping */}
+              <img 
+                src={slide.image}
+                alt={slide.title || 'Slide Image'}
+                className="w-full h-full object-cover object-center transition-all duration-300"
+              />
             </div>
           ))}
         </div>
@@ -83,13 +84,15 @@ export default function HeroSlider() {
         </button>
 
         {/* Pagination Dots at Bottom Center */}
-        <div className="absolute bottom-2 sm:bottom-4 left-1/2 -translate-x-1/2 flex gap-1.5 sm:gap-3 z-20">
+        <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2 sm:gap-3 z-20 items-center justify-center">
           {slides.map((_, index) => (
             <button
               key={index}
               onClick={() => setCurrentSlide(index)}
-              className={`w-2 h-2 sm:w-3 sm:h-3 rounded-full transition-all ${
-                currentSlide === index ? 'bg-amber-500 scale-125' : 'bg-white/50 hover:bg-white/80'
+              className={`rounded-full transition-all duration-300 ${
+                currentSlide === index 
+                  ? 'bg-amber-500 w-3 h-3 sm:w-3.5 sm:h-3.5 shadow-md shadow-amber-500/20' 
+                  : 'bg-white/50 hover:bg-white/80 w-2 h-2 sm:w-2.5 sm:h-2.5'
               }`}
               aria-label={`Go to slide ${index + 1}`}
             />
