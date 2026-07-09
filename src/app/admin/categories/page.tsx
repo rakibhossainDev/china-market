@@ -43,21 +43,19 @@ export default function AdminCategoriesPage() {
     
     setIsSubmitting(true);
     
-    // Convert name to a simple slug for ID if your DB expects it, but usually UUIDs are auto-generated.
-    // Assuming the DB auto-generates ID if omitted, or we generate a slug-like string.
-    const slugId = newCategoryName.trim().toLowerCase().replace(/\s+/g, '-');
+    const slug = newCategoryName.trim().toLowerCase().replace(/[^a-z0-9]+/g, '-');
 
     const { error } = await supabase.from('categories').insert([{
-      id: slugId,
+      slug: slug,
       name: newCategoryName.trim(),
-      icon: newCategoryIcon.trim() || 'Folder'
+      icon_name: newCategoryIcon.trim() || 'Folder'
     }]);
 
     setIsSubmitting(false);
 
     if (error) {
       console.error("Error adding category:", error);
-      alert("Failed to add category. It may already exist.");
+      alert(error.message || "Failed to add category");
     } else {
       setNewCategoryName('');
       setNewCategoryIcon('');
