@@ -6,11 +6,11 @@ import Link from 'next/link';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { supabase } from '@/lib/supabase';
 
-const coreLinks = [
-  { label: 'Home', href: '/', icon: Home },
+const topLink = { label: 'Home', href: '/', icon: Home };
+const bottomLinks = [
   { label: 'Bulk Order', href: '/bulk-order', icon: Package },
   { label: 'Track Sourcing', href: '/track', icon: Plane },
-  { label: 'Account', href: '/account', icon: User },
+  { label: 'Accounting', href: '/account', icon: User },
 ];
 
 const iconMap: Record<string, React.ElementType> = {
@@ -144,30 +144,25 @@ function SidebarContent({ isOpen, setIsOpen, isDesktopExpanded, setIsDesktopExpa
         </div>
         
         <div className={`flex-1 overflow-y-auto overflow-x-hidden scrollbar-hide pt-4 pb-24 md:pb-4 space-y-6 ${isDesktopExpanded ? 'px-4' : 'px-4 md:px-2'}`}>
-          {/* Core Links */}
+          {/* Top Section */}
           <nav className="space-y-1">
-            {coreLinks.map((link) => {
-              const Icon = link.icon;
-              return (
-                <Link 
-                  key={link.label}
-                  href={link.href}
-                  title={!isDesktopExpanded ? link.label : undefined}
-                  className={`flex items-center gap-3 py-3 rounded-lg hover:bg-slate-800 transition-colors text-slate-300 hover:text-white font-medium ${isDesktopExpanded ? 'px-4' : 'px-4 md:px-0 md:justify-center'}`}
-                  onClick={() => {
-                    if (window.innerWidth < 768) setIsOpen(false);
-                  }}
-                >
-                  <Icon className="h-5 w-5 shrink-0" />
-                  <span className={`${!isDesktopExpanded ? 'md:hidden' : ''} whitespace-nowrap`}>
-                    {link.label}
-                  </span>
-                </Link>
-              )
-            })}
+            <Link 
+              href={topLink.href}
+              title={!isDesktopExpanded ? topLink.label : undefined}
+              className={`flex items-center gap-3 py-3 rounded-lg hover:bg-slate-800 transition-colors text-slate-300 hover:text-white font-medium ${isDesktopExpanded ? 'px-4' : 'px-4 md:px-0 md:justify-center'}`}
+              onClick={() => {
+                if (window.innerWidth < 768) setIsOpen(false);
+              }}
+            >
+              <topLink.icon className="h-5 w-5 shrink-0" />
+              <span className={`${!isDesktopExpanded ? 'md:hidden' : ''} whitespace-nowrap`}>
+                {topLink.label}
+              </span>
+            </Link>
           </nav>
 
-          <div className="border-t border-slate-800 pt-4">
+          {/* Categories Section (Middle) */}
+          <div>
             <h3 className={`px-4 text-xs font-semibold text-slate-500 uppercase tracking-wider mb-2 ${!isDesktopExpanded ? 'md:hidden' : ''}`}>
               Categories
             </h3>
@@ -242,6 +237,31 @@ function SidebarContent({ isOpen, setIsOpen, isDesktopExpanded, setIsDesktopExpa
                 })}
               </nav>
             )}
+          </div>
+
+          {/* Bottom Section (Services) */}
+          <div className="pt-6 border-t border-slate-800/60">
+            <nav className="space-y-1">
+              {bottomLinks.map((link) => {
+                const Icon = link.icon;
+                return (
+                  <Link 
+                    key={link.label}
+                    href={link.href}
+                    title={!isDesktopExpanded ? link.label : undefined}
+                    className={`flex items-center gap-3 py-3 rounded-lg hover:bg-slate-800 transition-colors text-slate-300 hover:text-white font-medium ${isDesktopExpanded ? 'px-4' : 'px-4 md:px-0 md:justify-center'}`}
+                    onClick={() => {
+                      if (window.innerWidth < 768) setIsOpen(false);
+                    }}
+                  >
+                    <Icon className="h-5 w-5 shrink-0" />
+                    <span className={`${!isDesktopExpanded ? 'md:hidden' : ''} whitespace-nowrap`}>
+                      {link.label}
+                    </span>
+                  </Link>
+                )
+              })}
+            </nav>
           </div>
         </div>
       </aside>
