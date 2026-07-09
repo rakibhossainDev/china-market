@@ -1,9 +1,10 @@
 "use client";
 
 import { useState, useEffect, Suspense } from 'react';
-import { X, ChevronDown, ChevronRight, Home, Package, Plane, User, ShoppingBag, Gem, Monitor, Shirt, PanelLeftClose, Menu } from 'lucide-react';
+import { X, ChevronDown, ChevronRight, Home, Package, Plane, User, ShoppingBag, Gem, Monitor, Shirt, PanelLeftClose, Menu, HelpCircle } from 'lucide-react';
 import Link from 'next/link';
 import { useRouter, useSearchParams } from 'next/navigation';
+import { supabase } from '@/lib/supabase';
 
 const coreLinks = [
   { label: 'Home', href: '/', icon: Home },
@@ -12,54 +13,25 @@ const coreLinks = [
   { label: 'Account', href: '/account', icon: User },
 ];
 
-const productCategories = [
-  {
-    name: 'Bags',
-    id: 'bags',
-    icon: ShoppingBag,
-    subcategories: [
-      { name: 'Purse', id: 'purse' },
-      { name: 'Briefcases', id: 'briefcases' },
-      { name: 'Money Clip', id: 'money-clip' },
-      { name: 'Wallet', id: 'wallet' },
-      { name: 'Backpack', id: 'backpack' },
-    ]
-  },
-  {
-    name: 'Jewelry',
-    id: 'jewelry',
-    icon: Gem,
-    subcategories: [
-      { name: 'Necklaces', id: 'necklaces' },
-      { name: 'Rings', id: 'rings' },
-      { name: 'Bracelets', id: 'bracelets' },
-      { name: 'Earrings', id: 'earrings' },
-    ]
-  },
-  {
-    name: 'Electronics',
-    id: 'electronics',
-    icon: Monitor,
-    subcategories: [
-      { name: 'Smartphones', id: 'smartphones' },
-      { name: 'Laptops', id: 'laptops' },
-      { name: 'Accessories', id: 'accessories' },
-      { name: 'Wearables', id: 'wearables' },
-    ]
-  },
-  {
-    name: 'Fashion',
-    id: 'fashion',
-    icon: Shirt,
-    subcategories: [
-      { name: 'Men', id: 'men' },
-      { name: 'Women', id: 'women' },
-      { name: 'Kids', id: 'kids' },
-      { name: 'Shoes', id: 'shoes' },
-      { name: 'Accessories', id: 'fashion-accessories' },
-    ]
-  }
-];
+const iconMap: Record<string, React.ElementType> = {
+  'ShoppingBag': ShoppingBag,
+  'Gem': Gem,
+  'Monitor': Monitor,
+  'Shirt': Shirt,
+};
+
+interface Category {
+  id: string;
+  name: string;
+  icon: string;
+  subcategories?: SubCategory[];
+}
+
+interface SubCategory {
+  id: string;
+  name: string;
+  category_id: string;
+}
 
 interface SidebarProps {
   isOpen: boolean;
@@ -75,12 +47,47 @@ function SidebarContent({ isOpen, setIsOpen, isDesktopExpanded, setIsDesktopExpa
   const subParam = searchParams.get('sub');
 
   const [expandedCategory, setExpandedCategory] = useState<string | null>(categoryParam);
+  const [categories, setCategories] = useState<Category[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     if (categoryParam) {
       setExpandedCategory(categoryParam);
     }
   }, [categoryParam]);
+
+  useEffect(() => {
+    async function fetchCategories() {
+      try {
+        const { data: cats, error: catsError } = await supabase
+          .from('categories')
+          .select('*')
+          .order('name');
+          
+        const { data: subCats, error: subCatsError } = await supabase
+          .from('sub_categories')
+          .select('*')
+          .order('name');
+
+        if (catsError || subCatsError) {
+          console.error("Error fetching categories:", catsError || subCatsError);
+          setCategories([]);
+          return;
+        }
+
+        const formattedCategories = (cats || []).map(cat => ({
+          ...cat,
+          subcategories: (subCats || []).filter(sub => sub.category_id === cat.id)
+        }));
+        setCategories(formattedCategories);
+      } catch (err) {
+        console.error("Failed to load categories", err);
+      } finally {
+        setIsLoading(false);
+      }
+    }
+    fetchCategories();
+  }, []);
 
   const handleCategoryClick = (categoryId: string) => {
     if (!isDesktopExpanded) setIsDesktopExpanded(true);
@@ -164,65 +171,77 @@ function SidebarContent({ isOpen, setIsOpen, isDesktopExpanded, setIsDesktopExpa
             <h3 className={`px-4 text-xs font-semibold text-slate-500 uppercase tracking-wider mb-2 ${!isDesktopExpanded ? 'md:hidden' : ''}`}>
               Categories
             </h3>
-            <nav className="space-y-1">
-              {productCategories.map((category) => {
-                const isActiveCategory = categoryParam === category.id;
-                const isExpanded = expandedCategory === category.id && isDesktopExpanded;
-                const Icon = category.icon;
+            {isLoading ? (
+              <div className="space-y-2 px-2">
+                {[1, 2, 3].map(i => (
+                  <div key={i} className="h-10 bg-slate-800 rounded animate-pulse" />
+                ))}
+              </div>
+            ) : categories.length === 0 ? (
+              <p className={`text-slate-500 text-sm px-4 ${!isDesktopExpanded ? 'hidden' : ''}`}>No categories found.</p>
+            ) : (
+              <nav className="space-y-1">
+                {categories.map((category) => {
+                  const isActiveCategory = categoryParam === category.id;
+                  const isExpanded = expandedCategory === category.id && isDesktopExpanded;
+                  const Icon = iconMap[category.icon] || HelpCircle;
 
-                return (
-                  <div key={category.id} className="flex flex-col">
-                    <button
-                      onClick={() => handleCategoryClick(category.id)}
-                      title={!isDesktopExpanded ? category.name : undefined}
-                      className={`flex items-center justify-between py-3 rounded-lg transition-colors font-medium w-full text-left ${
-                        isActiveCategory 
-                          ? 'bg-amber-500/10 text-amber-500' 
-                          : 'text-slate-300 hover:bg-slate-800 hover:text-white'
-                      } ${isDesktopExpanded ? 'px-4' : 'px-4 md:px-0 md:justify-center'}`}
-                    >
-                      <div className={`flex items-center ${isDesktopExpanded ? 'gap-3' : 'gap-3 md:gap-0'}`}>
-                        <Icon className="h-5 w-5 shrink-0" />
-                        <span className={`${!isDesktopExpanded ? 'md:hidden' : ''} whitespace-nowrap`}>{category.name}</span>
-                      </div>
-                      <div className={`${!isDesktopExpanded ? 'md:hidden' : ''}`}>
-                        {isExpanded ? (
-                          <ChevronDown className="h-4 w-4 transition-transform duration-200" />
-                        ) : (
-                          <ChevronRight className="h-4 w-4 transition-transform duration-200" />
-                        )}
-                      </div>
-                    </button>
-                    
-                    {/* Subcategories Accordion */}
-                    <div 
-                      className={`overflow-hidden transition-all duration-300 ease-in-out ${!isDesktopExpanded ? 'md:hidden' : ''} ${
-                        isExpanded ? 'max-h-96 opacity-100 mt-1' : 'max-h-0 opacity-0'
-                      }`}
-                    >
-                      <div className="flex flex-col space-y-1 px-4 pb-2 border-l-2 border-slate-800 ml-4">
-                        {category.subcategories.map((sub) => {
-                          const isActiveSub = isActiveCategory && subParam === sub.id;
-                          return (
-                            <button
-                              key={sub.id}
-                              onClick={() => handleSubCategoryClick(category.id, sub.id)}
-                              className={`text-left pl-4 py-2 text-sm rounded-lg transition-colors whitespace-nowrap ${
-                                isActiveSub 
-                                  ? 'text-amber-500 bg-amber-500/10 font-medium' 
-                                  : 'text-slate-400 hover:text-slate-100 hover:bg-slate-800/50'
-                              }`}
-                            >
-                              {sub.name}
-                            </button>
-                          );
-                        })}
-                      </div>
+                  return (
+                    <div key={category.id} className="flex flex-col">
+                      <button
+                        onClick={() => handleCategoryClick(category.id)}
+                        title={!isDesktopExpanded ? category.name : undefined}
+                        className={`flex items-center justify-between py-3 rounded-lg transition-colors font-medium w-full text-left ${
+                          isActiveCategory 
+                            ? 'bg-amber-500/10 text-amber-500' 
+                            : 'text-slate-300 hover:bg-slate-800 hover:text-white'
+                        } ${isDesktopExpanded ? 'px-4' : 'px-4 md:px-0 md:justify-center'}`}
+                      >
+                        <div className={`flex items-center ${isDesktopExpanded ? 'gap-3' : 'gap-3 md:gap-0'}`}>
+                          <Icon className="h-5 w-5 shrink-0" />
+                          <span className={`${!isDesktopExpanded ? 'md:hidden' : ''} whitespace-nowrap`}>{category.name}</span>
+                        </div>
+                        <div className={`${!isDesktopExpanded ? 'md:hidden' : ''}`}>
+                          {isExpanded ? (
+                            <ChevronDown className="h-4 w-4 transition-transform duration-200" />
+                          ) : (
+                            <ChevronRight className="h-4 w-4 transition-transform duration-200" />
+                          )}
+                        </div>
+                      </button>
+                      
+                      {/* Subcategories Accordion */}
+                      {category.subcategories && category.subcategories.length > 0 && (
+                        <div 
+                          className={`overflow-hidden transition-all duration-300 ease-in-out ${!isDesktopExpanded ? 'md:hidden' : ''} ${
+                            isExpanded ? 'max-h-96 opacity-100 mt-1' : 'max-h-0 opacity-0'
+                          }`}
+                        >
+                          <div className="flex flex-col space-y-1 px-4 pb-2 border-l-2 border-slate-800 ml-4">
+                            {category.subcategories.map((sub) => {
+                              const isActiveSub = isActiveCategory && subParam === sub.id;
+                              return (
+                                <button
+                                  key={sub.id}
+                                  onClick={() => handleSubCategoryClick(category.id, sub.id)}
+                                  className={`text-left pl-4 py-2 text-sm rounded-lg transition-colors whitespace-nowrap ${
+                                    isActiveSub 
+                                      ? 'text-amber-500 bg-amber-500/10 font-medium' 
+                                      : 'text-slate-400 hover:text-slate-100 hover:bg-slate-800/50'
+                                  }`}
+                                >
+                                  {sub.name}
+                                </button>
+                              );
+                            })}
+                          </div>
+                        </div>
+                      )}
                     </div>
-                  </div>
-                );
-              })}
-            </nav>
+                  );
+                })}
+              </nav>
+            )}
           </div>
         </div>
       </aside>
