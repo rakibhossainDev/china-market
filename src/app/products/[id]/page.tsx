@@ -3,55 +3,76 @@
 import { useState, useEffect, use } from 'react';
 import { Package, Plane, ShieldCheck, HelpCircle, FileText, Anchor } from 'lucide-react';
 import Link from 'next/link';
+import { supabase } from '@/lib/supabase';
 
-// Mock Data
-const productData = {
-  id: "1",
-  title: "Premium TWS Wireless Earbuds Pro - Noise Cancelling",
-  sku: "TWS-PRO-2026-X",
-  moq: 100,
-  images: [
-    "https://images.unsplash.com/photo-1606220588913-b3aea9056d4c?q=80&w=2070&auto=format&fit=crop",
-    "https://images.unsplash.com/photo-1590658268037-6bf12165a8df?q=80&w=2124&auto=format&fit=crop",
-    "https://images.unsplash.com/photo-1606220838315-056192d5e927?q=80&w=2070&auto=format&fit=crop",
-    "https://images.unsplash.com/photo-1572569433114-6105c3b6f272?q=80&w=2187&auto=format&fit=crop"
-  ],
-  pricingTiers: [
-    { min: 100, max: 500, price: 150 },
-    { min: 501, max: 2000, price: 130 },
-    { min: 2001, max: Infinity, price: 110 }
-  ],
-  specs: {
-    material: "Premium ABS Plastic & Silicone",
-    weight: "0.15 KG / unit (packaged)",
-    cbm: "0.002 CBM / unit",
-    origin: "Shenzhen, Guangdong, China",
-    battery: "45mAh (Earbuds), 400mAh (Case)"
-  }
+// Hardcoded defaults for unmapped schema data
+const defaultPricingTiers = [
+  { min: 100, max: 500, price: 150 },
+  { min: 501, max: 2000, price: 130 },
+  { min: 2001, max: Infinity, price: 110 }
+];
+
+const defaultSpecs = {
+  material: "Premium ABS Plastic & Silicone",
+  weight: "0.15 KG / unit (packaged)",
+  cbm: "0.002 CBM / unit",
+  origin: "Shenzhen, Guangdong, China",
+  battery: "45mAh (Earbuds), 400mAh (Case)"
 };
 
 export default function ProductDetailsPage({ params }: { params: Promise<{ id: string }> }) {
   const unwrappedParams = use(params);
   
-  const [currentImage, setCurrentImage] = useState(productData.images[0]);
-  const [quantity, setQuantity] = useState<number | ''>(productData.moq);
-  const [unitPrice, setUnitPrice] = useState<number>(productData.pricingTiers[0].price);
+  const [productData, setProductData] = useState<any>(null);
+  const [isLoading, setIsLoading] = useState(true);
+  
+  const [currentImage, setCurrentImage] = useState<string>('');
+  const [quantity, setQuantity] = useState<number | ''>('');
+  const [unitPrice, setUnitPrice] = useState<number>(0);
 
   useEffect(() => {
-    if (typeof quantity === 'number') {
+    async function loadProduct() {
+      const { data, error } = await supabase
+        .from('products')
+        .select('*')
+        .eq('id', unwrappedParams.id)
+        .single();
+        
+      if (data) {
+        // Handle images array or fallback to legacy image_url
+        const images = data.images && data.images.length > 0 ? data.images : [data.image_url || 'https://via.placeholder.com/400'];
+        
+        const pData = {
+          ...data,
+          images,
+          pricingTiers: defaultPricingTiers,
+          specs: defaultSpecs,
+          sku: `SKU-${data.id.substring(0, 8).toUpperCase()}`
+        };
+        setProductData(pData);
+        setCurrentImage(images[0]);
+        setQuantity(data.moq || 100);
+        setUnitPrice(data.price || 150);
+      }
+      setIsLoading(false);
+    }
+    loadProduct();
+  }, [unwrappedParams.id]);
+
+  useEffect(() => {
+    if (productData && typeof quantity === 'number') {
       const tier = productData.pricingTiers.find(
-        t => quantity >= t.min && quantity <= t.max
+        (t: any) => quantity >= t.min && quantity <= t.max
       );
       if (tier) {
         setUnitPrice(tier.price);
       } else if (quantity < productData.pricingTiers[0].min) {
-        // Fallback to base price if below MOQ
         setUnitPrice(productData.pricingTiers[0].price);
       } else if (quantity > productData.pricingTiers[productData.pricingTiers.length - 1].max) {
          setUnitPrice(productData.pricingTiers[productData.pricingTiers.length - 1].price);
       }
     }
-  }, [quantity]);
+  }, [quantity, productData]);
 
   const handleQuantityChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const val = e.target.value;
@@ -65,6 +86,9 @@ export default function ProductDetailsPage({ params }: { params: Promise<{ id: s
     }
   };
 
+  if (isLoading) return <div className="min-h-screen bg-slate-50 flex items-center justify-center">Loading product...</div>;
+  if (!productData) return <div className="min-h-screen bg-slate-50 flex items-center justify-center">Product not found.</div>;
+
   const isBelowMOQ = typeof quantity === 'number' && quantity < productData.moq;
   const totalAmount = typeof quantity === 'number' ? quantity * unitPrice : 0;
 
@@ -75,9 +99,7 @@ export default function ProductDetailsPage({ params }: { params: Promise<{ id: s
         <nav className="text-sm text-slate-500 flex items-center space-x-2">
           <Link href="/" className="hover:text-amber-600 transition-colors">Home</Link>
           <span>/</span>
-          <Link href="#" className="hover:text-amber-600 transition-colors">Electronics</Link>
-          <span>/</span>
-          <Link href="#" className="hover:text-amber-600 transition-colors">Audio</Link>
+          <Link href="#" className="hover:text-amber-600 transition-colors">Catalog</Link>
           <span>/</span>
           <span className="text-slate-900 font-medium truncate max-w-[200px] inline-block">{productData.title}</span>
         </nav>
@@ -89,21 +111,23 @@ export default function ProductDetailsPage({ params }: { params: Promise<{ id: s
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12">
             
             {/* Left Column: Image Gallery */}
-            <div className="space-y-4">
-              <div 
-                className="w-full aspect-square bg-slate-100 rounded-[5px] overflow-hidden relative bg-cover bg-center transition-all duration-300"
-                style={{ backgroundImage: `url(${currentImage})` }}
-              >
-              </div>
-              <div className="grid grid-cols-4 gap-4">
-                {productData.images.map((img, idx) => (
+            <div className="flex gap-4 h-[300px] sm:h-[400px] md:h-[500px]">
+              {/* Vertical Strip */}
+              <div className="flex flex-col gap-3 w-16 md:w-20 shrink-0 overflow-y-auto scrollbar-hide">
+                {productData.images.map((img: string, idx: number) => (
                   <button 
                     key={idx}
                     onClick={() => setCurrentImage(img)}
-                    className={`aspect-square rounded-[5px] overflow-hidden relative bg-cover bg-center border-2 transition-colors ${currentImage === img ? 'border-amber-500' : 'border-transparent hover:border-slate-300'}`}
+                    className={`w-full aspect-square rounded-[5px] overflow-hidden relative bg-cover bg-center border-2 transition-all ${currentImage === img ? 'border-amber-500 opacity-100' : 'border-transparent opacity-60 hover:opacity-100'}`}
                     style={{ backgroundImage: `url(${img})` }}
                   />
                 ))}
+              </div>
+              {/* Main Feature Image */}
+              <div 
+                className="flex-1 bg-slate-100 rounded-[5px] overflow-hidden relative bg-cover bg-center transition-all duration-300 h-full"
+                style={{ backgroundImage: `url(${currentImage})` }}
+              >
               </div>
             </div>
 
@@ -127,11 +151,26 @@ export default function ProductDetailsPage({ params }: { params: Promise<{ id: s
               </h1>
               <p className="text-slate-500 text-sm font-mono mb-6">SKU: {productData.sku}</p>
 
+              {/* Color/Variant Selection Grid */}
+              <div className="mb-6 border-b border-slate-100 pb-6">
+                <h3 className="text-sm font-bold text-slate-900 uppercase tracking-wider mb-3">Color Variations</h3>
+                <div className="flex flex-wrap gap-3">
+                  {productData.images.map((img: string, idx: number) => (
+                    <button 
+                      key={idx}
+                      onClick={() => setCurrentImage(img)}
+                      className={`w-12 h-12 rounded-[5px] overflow-hidden relative bg-cover bg-center border-2 transition-all ${currentImage === img ? 'border-amber-500 scale-110 shadow-md' : 'border-slate-200 hover:border-slate-400'}`}
+                      style={{ backgroundImage: `url(${img})` }}
+                    />
+                  ))}
+                </div>
+              </div>
+
               {/* Tiered Pricing Table */}
               <div className="bg-slate-50 border border-slate-200 rounded-lg p-5 mb-8">
                 <h3 className="text-sm font-bold text-slate-900 uppercase tracking-wider mb-4 border-b border-slate-200 pb-2">Wholesale Tiered Pricing</h3>
                 <div className="grid grid-cols-3 gap-4 text-center">
-                  {productData.pricingTiers.map((tier, idx) => (
+                  {productData.pricingTiers.map((tier: any, idx: number) => (
                     <div key={idx} className="flex flex-col items-center">
                       <span className="text-slate-500 text-xs font-medium mb-1">{tier.min} - {tier.max === Infinity ? '+' : tier.max} pcs</span>
                       <span className="text-lg font-bold text-slate-900">৳{tier.price}</span>

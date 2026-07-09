@@ -15,6 +15,7 @@ export default function AdminProductsPage() {
   
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
   
   const [formData, setFormData] = useState({
     title: '',
@@ -55,11 +56,53 @@ export default function AdminProductsPage() {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files) {
+      const files = Array.from(e.target.files);
+      const validFiles = files.filter(f => f.size <= 200 * 1024);
+      if (validFiles.length !== files.length) {
+        alert("Some files were skipped because they exceed 200KB limit.");
+      }
+      setSelectedFiles(prev => [...prev, ...validFiles]);
+    }
+  };
+  
+  const removeFile = (index: number) => {
+    setSelectedFiles(prev => prev.filter((_, i) => i !== index));
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (selectedFiles.length === 0) {
+      alert("Please select at least one image.");
+      return;
+    }
     setIsSubmitting(true);
     
-    const { title, price, old_price, moq, stock, description, image_url, category_id, sub_category_id } = formData;
+    const { title, price, old_price, moq, stock, description, category_id, sub_category_id } = formData;
+    
+    const imageUrls: string[] = [];
+    
+    for (let i = 0; i < selectedFiles.length; i++) {
+      const file = selectedFiles[i];
+      const fileExt = file.name.split('.').pop() || 'png';
+      const fileName = `prod-${Date.now()}-${i}.${fileExt}`;
+      const filePath = `products/${fileName}`;
+      
+      const { error: uploadError } = await supabase.storage
+        .from('products')
+        .upload(filePath, file);
+        
+      if (uploadError) {
+        console.error("Upload error:", uploadError);
+        alert(`Failed to upload image ${i+1}`);
+        setIsSubmitting(false);
+        return;
+      }
+      
+      const { data: { publicUrl } } = supabase.storage.from('products').getPublicUrl(filePath);
+      imageUrls.push(publicUrl);
+    }
     
     const { error } = await supabase.from('products').insert([{
       title,
@@ -68,7 +111,7 @@ export default function AdminProductsPage() {
       moq: parseInt(moq) || 0,
       stock: parseInt(stock) || 0,
       description,
-      image_url,
+      images: imageUrls,
       category_id: category_id || null,
       sub_category_id: sub_category_id || null
     }]);
@@ -83,6 +126,7 @@ export default function AdminProductsPage() {
       setFormData({
         title: '', price: '', old_price: '', moq: '', stock: '', description: '', image_url: '', category_id: '', sub_category_id: ''
       });
+      setSelectedFiles([]);
       fetchData(); // Refresh list
       router.refresh(); // Refresh server caches if any
     }
@@ -145,7 +189,7 @@ export default function AdminProductsPage() {
                   <tr key={product.id} className="hover:bg-slate-800/40 transition-colors">
                     <td className="px-6 py-4">
                       <div className="flex items-center gap-3">
-                        <img src={product.image_url} alt={product.title} className="w-10 h-10 rounded object-cover bg-slate-800 border border-slate-700" />
+                        <img src={product.images && product.images.length > 0 ? product.images[0] : (product.image_url || 'https://via.placeholder.com/40')} alt={product.title} className="w-10 h-10 rounded object-cover bg-slate-800 border border-slate-700" />
                         <span className="font-medium text-slate-200">{product.title}</span>
                       </div>
                     </td>
@@ -240,8 +284,30 @@ export default function AdminProductsPage() {
               </div>
 
               <div>
-                <label className="block text-slate-400 mb-1.5">Image URL</label>
-                <input name="image_url" value={formData.image_url} onChange={handleInputChange} required placeholder="https://..." className="w-full bg-slate-950 border border-slate-800 rounded-lg px-4 py-2.5 text-white focus:outline-none focus:border-amber-500 transition-colors" />
+                <label className="block text-slate-400 mb-1.5">Images (Max 200KB each)</label>
+                <input 
+                  type="file" 
+                  multiple 
+                  accept="image/*" 
+                  onChange={handleFileChange} 
+                  className="w-full bg-slate-950 border border-slate-800 rounded-lg px-4 py-2.5 text-slate-400 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-amber-500/10 file:text-amber-500 hover:file:bg-amber-500/20" 
+                />
+                {selectedFiles.length > 0 && (
+                  <div className="grid grid-cols-4 gap-4 mt-4">
+                    {selectedFiles.map((file, idx) => (
+                      <div key={idx} className="relative aspect-square bg-slate-800 rounded-lg overflow-hidden group">
+                        <img src={URL.createObjectURL(file)} alt="Preview" className="w-full h-full object-cover" />
+                        <button 
+                          type="button" 
+                          onClick={() => removeFile(idx)}
+                          className="absolute top-1 right-1 bg-black/60 p-1 rounded-md opacity-0 group-hover:opacity-100 transition-opacity"
+                        >
+                          <X className="w-4 h-4 text-white" />
+                        </button>
+                      </div>
+                    ))}
+                  </div>
+                )}
               </div>
               
               <div>
@@ -254,7 +320,7 @@ export default function AdminProductsPage() {
                   Cancel
                 </button>
                 <button type="submit" disabled={isSubmitting} className="bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold py-2 px-6 rounded-lg transition-colors disabled:opacity-70 flex items-center gap-2">
-                  {isSubmitting ? 'Saving...' : 'Save Product'}
+                  {isSubmitting ? 'Uploading Images...' : 'Save Product'}
                 </button>
               </div>
             </form>
