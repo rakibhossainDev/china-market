@@ -145,57 +145,7 @@ export default function Home() {
           </div>
         </section>
 
-        {/* 4. Trust Badges / Features Bar (Moved to bottom) */}
-        <section className="bg-white border-t border-slate-200 mt-8">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 md:py-16">
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-8">
-              <div className="flex flex-col items-center text-center gap-3 group">
-                <div className="w-12 h-12 md:w-16 md:h-16 bg-blue-50 text-blue-600 rounded-full flex items-center justify-center group-hover:bg-blue-600 group-hover:text-white transition-colors shadow-sm">
-                  <ShieldCheck className="h-6 w-6 md:h-8 md:w-8" />
-                </div>
-                <div>
-                  <h3 className="font-bold text-sm md:text-base text-slate-900">Direct China Source</h3>
-                  <p className="text-xs md:text-sm text-slate-500 mt-1">Verified factory suppliers</p>
-                </div>
-              </div>
-              <div className="flex flex-col items-center text-center gap-3 group">
-                <div className="w-12 h-12 md:w-16 md:h-16 bg-blue-50 text-blue-600 rounded-full flex items-center justify-center group-hover:bg-blue-600 group-hover:text-white transition-colors shadow-sm">
-                  <Plane className="h-6 w-6 md:h-8 md:w-8" />
-                </div>
-                <div>
-                  <h3 className="font-bold text-sm md:text-base text-slate-900">7 Days Air Shipping</h3>
-                  <p className="text-xs md:text-sm text-slate-500 mt-1">Fastest route to BD</p>
-                </div>
-              </div>
-              <div className="flex flex-col items-center text-center gap-3 group">
-                <div className="w-12 h-12 md:w-16 md:h-16 bg-blue-50 text-blue-600 rounded-full flex items-center justify-center group-hover:bg-blue-600 group-hover:text-white transition-colors shadow-sm">
-                  <Tags className="h-6 w-6 md:h-8 md:w-8" />
-                </div>
-                <div>
-                  <h3 className="font-bold text-sm md:text-base text-slate-900">Tiered Pricing</h3>
-                  <p className="text-xs md:text-sm text-slate-500 mt-1">Buy more, save more</p>
-                </div>
-              </div>
-              <div className="flex flex-col items-center text-center gap-3 group">
-                <div className="w-12 h-12 md:w-16 md:h-16 bg-blue-50 text-blue-600 rounded-full flex items-center justify-center group-hover:bg-blue-600 group-hover:text-white transition-colors shadow-sm">
-                  <Headset className="h-6 w-6 md:h-8 md:w-8" />
-                </div>
-                <div>
-                  <h3 className="font-bold text-sm md:text-base text-slate-900">24/7 Support</h3>
-                  <p className="text-xs md:text-sm text-slate-500 mt-1">Dedicated account managers</p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
       </main>
-
-      {/* Footer */}
-      <footer className="bg-slate-900 text-slate-400 py-12 text-center">
-        <div className="max-w-7xl mx-auto px-4">
-          <p>&copy; 2026 China Market Wholesale. All rights reserved.</p>
-        </div>
-      </footer>
     </div>
   );
 }
