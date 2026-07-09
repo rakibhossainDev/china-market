@@ -4,10 +4,16 @@ import { useState } from 'react';
 import Sidebar from './Sidebar';
 import Header from './Header';
 import MobileBottomNav from './MobileBottomNav';
+import { usePathname } from 'next/navigation';
 
 export default function LayoutClient({ children }: { children: React.ReactNode }) {
   const [isMobileSidebarOpen, setIsMobileSidebarOpen] = useState(false);
   const [isDesktopExpanded, setIsDesktopExpanded] = useState(true);
+  const pathname = usePathname();
+
+  if (pathname?.startsWith('/admin')) {
+    return <>{children}</>;
+  }
 
   return (
     <div className="flex h-screen overflow-hidden bg-slate-50 font-sans text-slate-900">
