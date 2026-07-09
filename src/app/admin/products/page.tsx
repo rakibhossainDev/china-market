@@ -37,9 +37,9 @@ export default function AdminProductsPage() {
     setIsLoading(true);
     try {
       const [prodRes, catRes, subRes] = await Promise.all([
-        supabase.from('products').select('*').order('created_at', { ascending: false }),
-        supabase.from('categories').select('*').order('name'),
-        supabase.from('sub_categories').select('*').order('name')
+        supabase.from('products').select('*').is('deleted_at', null).order('created_at', { ascending: false }),
+        supabase.from('categories').select('*').is('deleted_at', null).order('name'),
+        supabase.from('sub_categories').select('*').is('deleted_at', null).order('name')
       ]);
 
       if (prodRes.data) setProducts(prodRes.data);
@@ -132,6 +132,18 @@ export default function AdminProductsPage() {
     }
   };
 
+  const handleDeleteProduct = async (id: string) => {
+    if (!confirm("Move this product to the recycle bin?")) return;
+    const { error } = await supabase.from('products').update({ deleted_at: new Date().toISOString() }).eq('id', id);
+    if (error) {
+      console.error("Delete error:", error);
+      alert("Failed to delete product");
+    } else {
+      fetchData();
+      router.refresh();
+    }
+  };
+
   const filteredSubCategories = subCategories.filter(sub => sub.category_id === formData.category_id);
 
   return (
@@ -210,7 +222,7 @@ export default function AdminProductsPage() {
                         <button className="p-1.5 text-slate-400 hover:text-amber-500 hover:bg-slate-800 rounded transition-colors" title="Edit">
                           <Edit2 className="w-4 h-4" />
                         </button>
-                        <button className="p-1.5 text-slate-400 hover:text-red-500 hover:bg-slate-800 rounded transition-colors" title="Delete">
+                        <button onClick={() => handleDeleteProduct(product.id)} className="p-1.5 text-slate-400 hover:text-red-500 hover:bg-slate-800 rounded transition-colors" title="Delete">
                           <Trash2 className="w-4 h-4" />
                         </button>
                       </div>

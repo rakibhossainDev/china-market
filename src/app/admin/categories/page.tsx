@@ -29,8 +29,8 @@ export default function AdminCategoriesPage() {
     setIsLoading(true);
     try {
       const [catRes, subRes] = await Promise.all([
-        supabase.from('categories').select('*').order('name'),
-        supabase.from('sub_categories').select('*').order('name')
+        supabase.from('categories').select('*').is('deleted_at', null).order('name'),
+        supabase.from('sub_categories').select('*').is('deleted_at', null).order('name')
       ]);
 
       if (catRes.data) setCategories(catRes.data);
@@ -115,6 +115,18 @@ export default function AdminCategoriesPage() {
       setNewSubName('');
       setNewSubImageFile(null);
       setNewSubCategoryId('');
+      fetchCategories();
+      router.refresh();
+    }
+  };
+
+  const handleDeleteCategory = async (id: string) => {
+    if (!confirm("Move this category to the recycle bin?")) return;
+    const { error } = await supabase.from('categories').update({ deleted_at: new Date().toISOString() }).eq('id', id);
+    if (error) {
+      console.error("Delete error:", error);
+      alert("Failed to delete category");
+    } else {
       fetchCategories();
       router.refresh();
     }
@@ -250,7 +262,7 @@ export default function AdminCategoriesPage() {
                         </h3>
                         <p className="text-xs text-slate-500 mt-1 font-mono">ID: {category.id}</p>
                       </div>
-                      <button className="text-slate-500 hover:text-red-500 transition-colors" title="Delete Category">
+                      <button onClick={() => handleDeleteCategory(category.id)} className="text-slate-500 hover:text-red-500 transition-colors" title="Delete Category">
                         <Trash2 className="w-4 h-4" />
                       </button>
                     </div>

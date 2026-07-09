@@ -23,6 +23,9 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
           <Link href="/admin/categories" className={`block px-4 py-2.5 rounded-lg transition-all ${isActive('/admin/categories')}`}>Manage Categories</Link>
           <Link href="/admin/products" className={`block px-4 py-2.5 rounded-lg transition-all ${isActive('/admin/products')}`}>Products Management</Link>
           <Link href="/admin/orders" className={`block px-4 py-2.5 rounded-lg transition-all ${isActive('/admin/orders')}`}>Orders</Link>
+          <Link href="/admin/recycle-bin" className={`block px-4 py-2.5 rounded-lg transition-all flex items-center justify-between ${isActive('/admin/recycle-bin')}`}>
+            Recycle Bin
+          </Link>
           <div className="pt-6 mt-6 border-t border-slate-800">
              <Link href="/" className="block px-4 py-2.5 rounded-lg text-slate-400 hover:bg-slate-800 hover:text-white transition-all">Back to Storefront</Link>
           </div>
