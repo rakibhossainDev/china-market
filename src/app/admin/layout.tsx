@@ -21,6 +21,9 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
         <nav className="flex-1 pt-6 space-y-2">
           <Link href="/admin" className={`block px-4 py-2.5 rounded-lg transition-all ${isActive('/admin')}`}>Dashboard Overview</Link>
           <Link href="/admin/categories" className={`block px-4 py-2.5 rounded-lg transition-all ${isActive('/admin/categories')}`}>Manage Categories</Link>
+          <Link href="/admin/hero" className={`block px-4 py-2.5 rounded-lg transition-all flex items-center gap-2 ${isActive('/admin/hero')}`}>
+            Manage Hero
+          </Link>
           <Link href="/admin/products" className={`block px-4 py-2.5 rounded-lg transition-all ${isActive('/admin/products')}`}>Products Management</Link>
           <Link href="/admin/orders" className={`block px-4 py-2.5 rounded-lg transition-all ${isActive('/admin/orders')}`}>Orders</Link>
           <Link href="/admin/recycle-bin" className={`block px-4 py-2.5 rounded-lg transition-all flex items-center justify-between ${isActive('/admin/recycle-bin')}`}>
