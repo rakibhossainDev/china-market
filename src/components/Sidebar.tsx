@@ -99,13 +99,13 @@ function SidebarContent({ isOpen, setIsOpen, isDesktopExpanded, setIsDesktopExpa
     <>
       {/* Mobile Drawer Overlay */}
       <div 
-        className={`fixed inset-0 bg-black/60 z-40 md:hidden transition-opacity duration-300 ${isOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'}`} 
+        className={`fixed inset-0 bg-black/60 z-[90] md:hidden transition-opacity duration-300 ${isOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'}`} 
         onClick={() => setIsOpen(false)}
       />
       
       {/* Sidebar Content */}
       <aside 
-        className={`fixed left-0 top-0 z-50 h-full bg-slate-900 text-white shadow-2xl transform transition-transform md:transition-all duration-300 ease-in-out flex flex-col 
+        className={`fixed inset-y-0 left-0 z-[100] md:z-50 h-screen bg-slate-900 text-white shadow-2xl transform transition-transform md:transition-all duration-300 ease-in-out flex flex-col 
           ${isOpen ? 'translate-x-0' : '-translate-x-full'} 
           md:translate-x-0 
           ${isDesktopExpanded ? 'md:w-64' : 'md:w-16'}
@@ -136,7 +136,7 @@ function SidebarContent({ isOpen, setIsOpen, isDesktopExpanded, setIsDesktopExpa
           </button>
         </div>
         
-        <div className={`flex-1 overflow-y-auto overflow-x-hidden scrollbar-hide py-4 space-y-6 ${isDesktopExpanded ? 'px-4' : 'px-4 md:px-2'}`}>
+        <div className={`flex-1 overflow-y-auto overflow-x-hidden scrollbar-hide pt-4 pb-24 md:pb-4 space-y-6 ${isDesktopExpanded ? 'px-4' : 'px-4 md:px-2'}`}>
           {/* Core Links */}
           <nav className="space-y-1">
             {coreLinks.map((link) => {
