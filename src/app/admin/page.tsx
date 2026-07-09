@@ -5,8 +5,7 @@ export const revalidate = 0;
 export default async function AdminDashboard() {
   const { count: productCount } = await supabase.from('products').select('*', { count: 'exact', head: true });
   const { count: categoryCount } = await supabase.from('categories').select('*', { count: 'exact', head: true });
-  // Assume orders table might not exist yet, fallback gracefully
-  const { count: orderCount } = await supabase.from('orders').select('*', { count: 'exact', head: true }).catch(() => ({ count: 0 }));
+  const { count: orderCount } = await supabase.from('orders').select('*', { count: 'exact', head: true });
 
   return (
     <div className="space-y-6">
