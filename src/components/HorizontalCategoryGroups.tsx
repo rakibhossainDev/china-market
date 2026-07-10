@@ -52,25 +52,25 @@ export default async function HorizontalCategoryGroups() {
           {activeGroups.map((group) => (
             <div 
               key={group.id} 
-              className="w-[85vw] sm:w-[320px] md:w-[290px] lg:w-[300px] xl:w-[310px] flex-shrink-0 snap-start bg-white border border-slate-100 p-3.5 rounded-md flex flex-col justify-between shadow-sm"
+              className="w-[85vw] sm:w-[320px] md:w-[290px] lg:w-[300px] xl:w-[310px] flex-shrink-0 snap-start bg-white border border-slate-100 p-2.5 sm:p-3.5 rounded-md flex flex-col justify-between shadow-sm"
             >
-              <h3 className="text-slate-800 font-bold text-base mb-3 truncate">{group.title}</h3>
+              <h3 className="text-sm sm:text-base font-bold text-slate-950 mb-2.5 truncate">{group.title}</h3>
               
-              <div className="grid grid-cols-2 gap-3">
+              <div className="grid grid-cols-2 gap-2 sm:gap-3">
                 {group.items.map((item: { id: number; name: string; slug: string; image_url: string | null; category_id: number }, idx: number) => (
                   <div key={idx} className="flex flex-col items-center group cursor-pointer">
-                    <div className="relative w-full aspect-square bg-slate-100 rounded-md overflow-hidden p-2 flex items-center justify-center border border-slate-100">
+                    <div className="relative w-full aspect-square bg-slate-50 rounded-md overflow-hidden flex items-center justify-center border border-slate-100">
                       {item.image_url ? (
                         <img 
                           src={item.image_url} 
                           alt={item.name} 
-                          className="w-full h-full object-cover rounded-md"
+                          className="w-full h-full object-cover"
                         />
                       ) : (
                         <ImageIcon className="text-slate-400 w-8 h-8" />
                       )}
                     </div>
-                    <span className="text-xs font-medium text-slate-600 mt-2 text-center truncate w-full px-2 pb-1">
+                    <span className="mt-1.5 text-[11px] sm:text-xs font-medium text-slate-700 text-center tracking-tight truncate w-full px-1 pb-0.5">
                       {item.name}
                     </span>
                   </div>
