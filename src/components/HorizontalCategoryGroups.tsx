@@ -5,7 +5,8 @@ import { supabase } from '@/lib/supabase';
 export default async function HorizontalCategoryGroups() {
   const { data: categories, error: catError } = await supabase
     .from('categories')
-    .select('*')
+    .select('*, sub_categories(*)')
+    .eq('is_featured', true)
     .order('name');
     
   if (catError || !categories) {
@@ -13,24 +14,18 @@ export default async function HorizontalCategoryGroups() {
     return null;
   }
 
-  const categoryGroups = await Promise.all(
-    categories.map(async (cat) => {
-      const { data: subCats } = await supabase
-        .from('sub_categories')
-        .select('*')
-        .eq('category_id', cat.id)
-        .limit(4);
-        
-      return {
-        id: cat.id,
-        title: `${cat.name} Collection`,
-        items: (subCats || []).map(s => ({
-          name: s.name,
-          image: s.image_url || 'https://via.placeholder.com/150'
-        }))
-      };
-    })
-  );
+  const categoryGroups = categories.map((cat) => {
+    const subCats = (cat.sub_categories || []).slice(0, 4);
+      
+    return {
+      id: cat.id,
+      title: `${cat.name} Collection`,
+      items: subCats.map((s: any) => ({
+        name: s.name,
+        image: s.image_url || 'https://via.placeholder.com/150'
+      }))
+    };
+  });
 
   const activeGroups = categoryGroups.filter(g => g.items.length > 0);
 
