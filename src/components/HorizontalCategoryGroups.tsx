@@ -39,25 +39,25 @@ export default async function HorizontalCategoryGroups() {
   return (
     <section className="pb-8">
       <div className="max-w-7xl mx-auto">
-        <div className="flex overflow-x-auto space-x-4 px-4 sm:px-6 lg:px-8 pb-4 scrollbar-hide snap-x snap-mandatory">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-6 w-full px-2 sm:px-4 pb-4">
           {activeGroups.map((group) => (
             <div 
               key={group.id} 
-              className="w-[88%] sm:w-[45%] md:w-[31%] flex-shrink-0 bg-white rounded-2xl p-5 border border-slate-100 shadow-[0_2px_8px_rgba(0,0,0,0.04)] snap-center"
+              className="bg-white rounded-2xl p-4 border border-slate-100 shadow-sm flex flex-col justify-between"
             >
-              <h3 className="text-orange-600 font-bold text-base md:text-lg mb-4">{group.title}</h3>
+              <h3 className="text-slate-800 font-bold text-lg mb-4 truncate">{group.title}</h3>
               
               <div className="grid grid-cols-2 gap-3">
                 {group.items.map((item, idx) => (
                   <div key={idx} className="flex flex-col items-center group cursor-pointer">
-                    <div className="bg-slate-50 rounded-xl p-2 flex items-center justify-center w-full aspect-square group-hover:bg-slate-100/80 transition-colors overflow-hidden">
+                    <div className="bg-slate-50/80 rounded-xl aspect-square w-full flex items-center justify-center overflow-hidden border border-slate-100/40 p-2 hover:opacity-90 transition-opacity">
                       <img 
                         src={item.image} 
                         alt={item.name} 
-                        className="w-full h-full object-contain group-hover:scale-105 transition-transform duration-300"
+                        className="w-full h-full object-contain"
                       />
                     </div>
-                    <span className="text-xs md:text-sm text-center text-slate-700 font-medium mt-1.5 group-hover:text-blue-600 transition-colors line-clamp-1">
+                    <span className="text-xs font-medium text-slate-600 mt-1.5 text-center truncate w-full">
                       {item.name}
                     </span>
                   </div>
