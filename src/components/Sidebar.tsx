@@ -145,7 +145,7 @@ function SidebarContent({ isOpen, setIsOpen, isDesktopExpanded, setIsDesktopExpa
             <Link 
               href={topLink.href}
               title={!isDesktopExpanded ? topLink.label : undefined}
-              className={`flex items-center gap-3 py-3 rounded-lg hover:bg-slate-50 transition-colors text-slate-600 hover:text-slate-900 font-medium focus:outline-none focus:ring-2 focus:ring-[#F2A900] focus:ring-inset ${isDesktopExpanded ? 'px-4' : 'px-4 md:px-0 md:justify-center'}`}
+              className={`group flex items-center gap-2.5 py-2.5 rounded-lg hover:bg-slate-50 transition-colors text-[13px] font-medium tracking-wide text-slate-600 hover:text-slate-900 focus:outline-none focus:ring-2 focus:ring-[#F2A900] focus:ring-inset ${isDesktopExpanded ? 'px-4' : 'px-4 md:px-0 md:justify-center'}`}
               onClick={() => {
                 if (window.innerWidth < 768) setIsOpen(false);
               }}
@@ -184,17 +184,17 @@ function SidebarContent({ isOpen, setIsOpen, isDesktopExpanded, setIsDesktopExpa
                       <button
                         onClick={() => handleCategoryClick(category.id)}
                         title={!isDesktopExpanded ? category.name : undefined}
-                        className={`group flex items-center justify-between py-3 rounded-lg transition-colors font-medium w-full text-left focus:outline-none focus:ring-2 focus:ring-[#F2A900] focus:ring-inset ${
+                        className={`group flex items-center justify-between py-2.5 rounded-lg transition-colors text-[13px] font-medium tracking-wide w-full text-left focus:outline-none focus:ring-2 focus:ring-[#F2A900] focus:ring-inset ${
                           isActiveCategory 
                             ? 'bg-amber-500/10 text-[#F2A900]' 
                             : 'text-slate-600 hover:bg-slate-50 hover:text-slate-900'
                         } ${isDesktopExpanded ? 'px-4' : 'px-4 md:px-0 md:justify-center'}`}
                       >
                         <div className={`flex items-center ${isDesktopExpanded ? 'gap-0' : 'gap-0 md:justify-center'}`}>
-                          <IconComponent className={`w-5 h-5 mr-3 shrink-0 transition-colors ${isActiveCategory ? 'text-[#F2A900]' : 'text-slate-500 group-hover:text-[#F2A900]'}`} />
+                          <IconComponent className={`w-5 h-5 mr-2.5 shrink-0 transition-colors ${isActiveCategory ? 'text-[#F2A900]' : 'text-slate-500 group-hover:text-[#F2A900]'}`} />
                           <span className={`${!isDesktopExpanded ? 'md:hidden' : ''} whitespace-nowrap`}>{category.name}</span>
                         </div>
-                        <div className={`${!isDesktopExpanded ? 'md:hidden' : ''}`}>
+                        <div className={`${!isDesktopExpanded ? 'md:hidden' : ''} ml-auto pl-2`}>
                           {isExpanded ? (
                             <ChevronDown className="h-4 w-4 transition-transform duration-200" />
                           ) : (
@@ -217,7 +217,7 @@ function SidebarContent({ isOpen, setIsOpen, isDesktopExpanded, setIsDesktopExpa
                                 <button
                                   key={sub.id}
                                   onClick={() => handleSubCategoryClick(category.id, sub.id)}
-                                  className={`text-left pl-4 py-2 text-sm rounded-lg transition-colors whitespace-nowrap focus:outline-none focus:ring-2 focus:ring-[#F2A900] focus:ring-inset ${
+                                  className={`text-left pl-4 py-2 text-[13px] tracking-wide rounded-lg transition-colors whitespace-nowrap focus:outline-none focus:ring-2 focus:ring-[#F2A900] focus:ring-inset ${
                                     isActiveSub 
                                       ? 'text-[#F2A900] bg-amber-500/10 font-medium' 
                                       : 'text-slate-500 hover:text-slate-900 hover:bg-slate-50'
@@ -247,7 +247,7 @@ function SidebarContent({ isOpen, setIsOpen, isDesktopExpanded, setIsDesktopExpa
                     key={link.label}
                     href={link.href}
                     title={!isDesktopExpanded ? link.label : undefined}
-                    className={`flex items-center gap-3 py-3 rounded-lg hover:bg-slate-50 transition-colors text-slate-600 hover:text-slate-900 font-medium focus:outline-none focus:ring-2 focus:ring-[#F2A900] focus:ring-inset ${isDesktopExpanded ? 'px-4' : 'px-4 md:px-0 md:justify-center'}`}
+                    className={`group flex items-center gap-2.5 py-2.5 rounded-lg hover:bg-slate-50 transition-colors text-[13px] font-medium tracking-wide text-slate-600 hover:text-slate-900 focus:outline-none focus:ring-2 focus:ring-[#F2A900] focus:ring-inset ${isDesktopExpanded ? 'px-4' : 'px-4 md:px-0 md:justify-center'}`}
                     onClick={() => {
                       if (window.innerWidth < 768) setIsOpen(false);
                     }}
