@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react';
 import { supabase } from '@/lib/supabase';
 import { useRouter } from 'next/navigation';
-import { Plus, Folder, Trash2 } from 'lucide-react';
+import { Plus, Folder, Trash2, X } from 'lucide-react';
 
 export default function AdminCategoriesPage() {
   const router = useRouter();
@@ -135,6 +135,17 @@ export default function AdminCategoriesPage() {
     } else {
       fetchCategories();
       router.refresh();
+    }
+  };
+
+  const handleDeleteSubCategory = async (subCategoryId: string) => {
+    if (!window.confirm("Are you sure you want to delete this sub-category?")) return;
+    const { error } = await supabase.from('sub_categories').delete().eq('id', subCategoryId);
+    if (error) {
+      console.error("Delete sub-category error:", error);
+      alert("Failed to delete sub-category");
+    } else {
+      setSubCategories(prev => prev.filter(s => s.id !== subCategoryId));
     }
   };
 
@@ -278,8 +289,15 @@ export default function AdminCategoriesPage() {
                       <div className="flex flex-wrap gap-2">
                         {subs.length > 0 ? (
                           subs.map(sub => (
-                            <span key={sub.id} className="bg-[#0F172A] text-slate-300 text-xs px-2.5 py-1 rounded-sm border border-slate-700">
+                            <span key={sub.id} className="inline-flex items-center px-2 py-1 bg-slate-800 border border-slate-700 text-slate-300 text-xs rounded">
                               {sub.name}
+                              <button 
+                                onClick={() => handleDeleteSubCategory(sub.id)}
+                                className="ml-1.5 p-0.5 rounded-sm hover:bg-slate-700 text-slate-400 hover:text-red-400 transition-colors"
+                                title="Delete Sub-category"
+                              >
+                                <X className="w-3 h-3"/>
+                              </button>
                             </span>
                           ))
                         ) : (
