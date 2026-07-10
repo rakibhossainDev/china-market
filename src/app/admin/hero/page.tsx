@@ -39,8 +39,9 @@ export default function AdminHeroPage() {
     e.preventDefault();
     if (!newBannerFile) return;
     
-    if (newBannerFile.size > 200 * 1024) {
-      alert("Banner image exceeds 200KB limit.");
+    const maxSizeInBytes = 200 * 1024;
+    if (newBannerFile.size > maxSizeInBytes) {
+      alert("Error: This image exceeds the allowed 200KB size limit! Please compress your image using tinypng.com or another tool before uploading.");
       return;
     }
     
@@ -56,7 +57,7 @@ export default function AdminHeroPage() {
       
     if (uploadError) {
       console.error("Upload error:", uploadError);
-      alert("Failed to upload banner image.");
+      alert("Upload Failed: " + (uploadError.message || JSON.stringify(uploadError)));
       setIsUploading(false);
       return;
     }
@@ -72,7 +73,7 @@ export default function AdminHeroPage() {
 
     if (error) {
       console.error("Error adding banner:", error);
-      alert(error.message || "Failed to add banner");
+      alert("Upload Failed: " + (error.message || JSON.stringify(error)));
     } else {
       setNewBannerFile(null);
       fetchBanners();
@@ -124,7 +125,21 @@ export default function AdminHeroPage() {
                 <input 
                   type="file" 
                   accept="image/*" 
-                  onChange={(e) => setNewBannerFile(e.target.files?.[0] || null)} 
+                  onChange={(e) => {
+                    const file = e.target.files?.[0];
+                    if (file) {
+                      const maxSizeInBytes = 200 * 1024;
+                      if (file.size > maxSizeInBytes) {
+                        alert("Error: This image exceeds the allowed 200KB size limit! Please compress your image using tinypng.com or another tool before uploading.");
+                        e.target.value = '';
+                        setNewBannerFile(null);
+                        return;
+                      }
+                      setNewBannerFile(file);
+                    } else {
+                      setNewBannerFile(null);
+                    }
+                  }} 
                   required
                   className="w-full bg-slate-950 border border-slate-800 rounded-lg px-4 py-2.5 text-slate-400 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-amber-500/10 file:text-amber-500 hover:file:bg-amber-500/20" 
                 />
