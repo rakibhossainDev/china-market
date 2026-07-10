@@ -1,6 +1,7 @@
 import React from 'react';
 import Link from 'next/link';
 import { supabase } from '@/lib/supabase';
+import { ImageIcon } from 'lucide-react';
 
 export default async function HorizontalCategoryGroups() {
   const { data: categories, error: catError } = await supabase
@@ -15,7 +16,7 @@ export default async function HorizontalCategoryGroups() {
   }
 
   const categoryGroups = categories.map((cat) => {
-    const subCats = (cat.sub_categories || []).slice(0, 4);
+    const subCats = cat.sub_categories || [];
       
     return {
       id: cat.id,
@@ -24,7 +25,7 @@ export default async function HorizontalCategoryGroups() {
         id: s.id,
         name: s.name,
         slug: s.slug || '',
-        image_url: s.image_url || 'https://via.placeholder.com/150',
+        image_url: s.image_url,
         category_id: s.category_id
       }))
     };
@@ -56,16 +57,20 @@ export default async function HorizontalCategoryGroups() {
               <h3 className="text-slate-800 font-bold text-base mb-3 truncate">{group.title}</h3>
               
               <div className="grid grid-cols-2 gap-3">
-                {group.items.map((item: { id: number; name: string; slug: string; image_url: string; category_id: number }, idx: number) => (
+                {group.items.map((item: { id: number; name: string; slug: string; image_url: string | null; category_id: number }, idx: number) => (
                   <div key={idx} className="flex flex-col items-center group cursor-pointer">
-                    <div className="relative w-full aspect-square bg-slate-50 rounded-md overflow-hidden p-1">
-                      <img 
-                        src={item.image_url} 
-                        alt={item.name} 
-                        className="w-full h-full object-cover rounded-md"
-                      />
+                    <div className="relative w-full aspect-square bg-slate-100 rounded-md overflow-hidden p-2 flex items-center justify-center border border-slate-100">
+                      {item.image_url ? (
+                        <img 
+                          src={item.image_url} 
+                          alt={item.name} 
+                          className="w-full h-full object-cover rounded-md"
+                        />
+                      ) : (
+                        <ImageIcon className="text-slate-400 w-8 h-8" />
+                      )}
                     </div>
-                    <span className="text-xs font-medium text-slate-600 mt-2 text-center truncate w-full px-1">
+                    <span className="text-xs font-medium text-slate-600 mt-2 text-center truncate w-full px-2 pb-1">
                       {item.name}
                     </span>
                   </div>
