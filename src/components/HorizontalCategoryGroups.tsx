@@ -39,25 +39,25 @@ export default async function HorizontalCategoryGroups() {
   return (
     <section className="pb-8">
       <div className="max-w-7xl mx-auto">
-        <div className="flex overflow-x-auto gap-4 pb-4 snap-x snap-mandatory scrollbar-hide md:grid md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 md:gap-6 md:pb-0 md:overflow-x-visible w-full">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 w-full max-w-full overflow-x-hidden px-4">
           {activeGroups.map((group) => (
             <div 
               key={group.id} 
-              className="w-[88vw] sm:w-[360px] flex-shrink-0 snap-start md:w-full bg-white rounded-2xl p-4 border border-slate-100 shadow-sm flex flex-col justify-between"
+              className="w-full bg-white rounded-2xl p-4 border border-slate-100 shadow-sm flex flex-col justify-between"
             >
               <h3 className="text-slate-800 font-bold text-lg mb-4 truncate">{group.title}</h3>
               
               <div className="grid grid-cols-2 gap-3">
                 {group.items.map((item, idx) => (
                   <div key={idx} className="flex flex-col items-center group cursor-pointer">
-                    <div className="bg-slate-50/80 rounded-xl aspect-square w-full flex items-center justify-center overflow-hidden border border-slate-100/40 p-2 hover:opacity-90 transition-opacity">
+                    <div className="relative w-full aspect-square bg-slate-50 rounded-xl overflow-hidden border border-slate-100 flex items-center justify-center p-1">
                       <img 
                         src={item.image} 
                         alt={item.name} 
-                        className="w-full h-full object-contain"
+                        className="w-full h-full object-cover rounded-xl"
                       />
                     </div>
-                    <span className="text-xs font-medium text-slate-600 mt-1.5 text-center truncate w-full">
+                    <span className="text-xs font-medium text-slate-600 mt-2 text-center truncate w-full px-1">
                       {item.name}
                     </span>
                   </div>
