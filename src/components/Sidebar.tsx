@@ -1,7 +1,8 @@
 "use client";
 
 import { useState, useEffect, Suspense } from 'react';
-import { X, ChevronDown, ChevronRight, Home, Package, Plane, User, ShoppingBag, Gem, Monitor, Shirt, PanelLeftClose, Menu, HelpCircle } from 'lucide-react';
+import * as LucideIcons from 'lucide-react';
+import { X, ChevronDown, ChevronRight, Home, Package, Plane, User, PanelLeftClose, Menu } from 'lucide-react';
 import Link from 'next/link';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { supabase } from '@/lib/supabase';
@@ -13,12 +14,7 @@ const bottomLinks = [
   { label: 'Accounting', href: '/account', icon: User },
 ];
 
-const iconMap: Record<string, React.ElementType> = {
-  'ShoppingBag': ShoppingBag,
-  'Gem': Gem,
-  'Monitor': Monitor,
-  'Shirt': Shirt,
-};
+
 
 interface Category {
   id: string;
@@ -179,21 +175,21 @@ function SidebarContent({ isOpen, setIsOpen, isDesktopExpanded, setIsDesktopExpa
                 {categories.map((category) => {
                   const isActiveCategory = categoryParam === category.id;
                   const isExpanded = expandedCategory === category.id && isDesktopExpanded;
-                  const Icon = iconMap[category.icon] || HelpCircle;
+                  const Icon = (LucideIcons as any)[category.icon] || LucideIcons.Folder;
 
                   return (
                     <div key={category.id} className="flex flex-col">
                       <button
                         onClick={() => handleCategoryClick(category.id)}
                         title={!isDesktopExpanded ? category.name : undefined}
-                        className={`flex items-center justify-between py-3 rounded-lg transition-colors font-medium w-full text-left ${
+                        className={`group flex items-center justify-between py-3 rounded-lg transition-colors font-medium w-full text-left ${
                           isActiveCategory 
                             ? 'bg-amber-500/10 text-[#F2A900]' 
                             : 'text-slate-600 hover:bg-slate-50 hover:text-slate-900'
                         } ${isDesktopExpanded ? 'px-4' : 'px-4 md:px-0 md:justify-center'}`}
                       >
-                        <div className={`flex items-center ${isDesktopExpanded ? 'gap-3' : 'gap-3 md:gap-0'}`}>
-                          <Icon className="h-5 w-5 shrink-0" />
+                        <div className={`flex items-center ${isDesktopExpanded ? 'gap-0' : 'gap-0 md:justify-center'}`}>
+                          <Icon className={`w-5 h-5 mr-3 shrink-0 transition-colors ${isActiveCategory ? 'text-[#F2A900]' : 'text-slate-500 group-hover:text-[#F2A900]'}`} />
                           <span className={`${!isDesktopExpanded ? 'md:hidden' : ''} whitespace-nowrap`}>{category.name}</span>
                         </div>
                         <div className={`${!isDesktopExpanded ? 'md:hidden' : ''}`}>

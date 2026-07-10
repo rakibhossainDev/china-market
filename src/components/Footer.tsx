@@ -58,11 +58,8 @@ export default function Footer() {
     <footer className="w-full flex flex-col mt-auto shrink-0 bg-white text-slate-600 pt-16 pb-8 border-t border-slate-200/60 font-sans">
       <div className="max-w-7xl mx-auto px-4 w-full">
         
-        {/* Main Grid Split */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 mb-16">
-          
-          {/* Left Side: 4 Structural Columns */}
-          <div className="lg:col-span-8 grid grid-cols-2 md:grid-cols-4 gap-8">
+        {/* Main Layout Grid */}
+        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-8 mb-16">
             
             {/* Column 1: Shop */}
             <div className="flex flex-col gap-4">
@@ -124,10 +121,8 @@ export default function Footer() {
               </ul>
             </div>
 
-          </div>
-
-          {/* Right Side: Newsletter & Social */}
-          <div className="lg:col-span-4 flex flex-col gap-6">
+          {/* Newsletter & Social */}
+          <div className="col-span-full lg:col-span-1 flex flex-col gap-6">
             <div>
               <h4 className="text-slate-900 font-bold text-lg mb-3">Newsletter</h4>
               <p className="text-sm text-slate-500 mb-4">
