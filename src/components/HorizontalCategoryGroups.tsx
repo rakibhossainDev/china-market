@@ -43,14 +43,14 @@ export default async function HorizontalCategoryGroups() {
           {activeGroups.map((group) => (
             <div 
               key={group.id} 
-              className="w-[85vw] sm:w-[380px] md:w-[400px] flex-shrink-0 snap-start bg-white rounded-2xl p-4 border border-slate-100 shadow-sm flex flex-col justify-between"
+              className="w-[80vw] sm:w-[300px] md:w-[260px] lg:w-[280px] xl:w-[290px] flex-shrink-0 snap-start bg-white rounded-2xl p-3.5 border border-slate-100 shadow-sm flex flex-col justify-between"
             >
-              <h3 className="text-slate-800 font-bold text-lg mb-4 truncate">{group.title}</h3>
+              <h3 className="text-slate-800 font-bold text-base mb-3 truncate">{group.title}</h3>
               
-              <div className="grid grid-cols-2 gap-3">
+              <div className="grid grid-cols-2 gap-2.5">
                 {group.items.map((item, idx) => (
                   <div key={idx} className="flex flex-col items-center group cursor-pointer">
-                    <div className="relative w-full aspect-square bg-slate-50 rounded-xl overflow-hidden border border-slate-100 flex items-center justify-center p-1">
+                    <div className="relative w-full aspect-square bg-slate-50 rounded-xl overflow-hidden border border-slate-100 flex items-center justify-center p-1.5">
                       <img 
                         src={item.image} 
                         alt={item.name} 
