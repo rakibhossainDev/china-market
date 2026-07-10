@@ -145,7 +145,7 @@ function SidebarContent({ isOpen, setIsOpen, isDesktopExpanded, setIsDesktopExpa
             <Link 
               href={topLink.href}
               title={!isDesktopExpanded ? topLink.label : undefined}
-              className={`flex items-center gap-3 py-3 rounded-lg hover:bg-slate-50 transition-colors text-slate-600 hover:text-slate-900 font-medium ${isDesktopExpanded ? 'px-4' : 'px-4 md:px-0 md:justify-center'}`}
+              className={`flex items-center gap-3 py-3 rounded-lg hover:bg-slate-50 transition-colors text-slate-600 hover:text-slate-900 font-medium focus:outline-none focus:ring-2 focus:ring-[#F2A900] focus:ring-inset ${isDesktopExpanded ? 'px-4' : 'px-4 md:px-0 md:justify-center'}`}
               onClick={() => {
                 if (window.innerWidth < 768) setIsOpen(false);
               }}
@@ -182,7 +182,7 @@ function SidebarContent({ isOpen, setIsOpen, isDesktopExpanded, setIsDesktopExpa
                       <button
                         onClick={() => handleCategoryClick(category.id)}
                         title={!isDesktopExpanded ? category.name : undefined}
-                        className={`group flex items-center justify-between py-3 rounded-lg transition-colors font-medium w-full text-left ${
+                        className={`group flex items-center justify-between py-3 rounded-lg transition-colors font-medium w-full text-left focus:outline-none focus:ring-2 focus:ring-[#F2A900] focus:ring-inset ${
                           isActiveCategory 
                             ? 'bg-amber-500/10 text-[#F2A900]' 
                             : 'text-slate-600 hover:bg-slate-50 hover:text-slate-900'
@@ -215,7 +215,7 @@ function SidebarContent({ isOpen, setIsOpen, isDesktopExpanded, setIsDesktopExpa
                                 <button
                                   key={sub.id}
                                   onClick={() => handleSubCategoryClick(category.id, sub.id)}
-                                  className={`text-left pl-4 py-2 text-sm rounded-lg transition-colors whitespace-nowrap ${
+                                  className={`text-left pl-4 py-2 text-sm rounded-lg transition-colors whitespace-nowrap focus:outline-none focus:ring-2 focus:ring-[#F2A900] focus:ring-inset ${
                                     isActiveSub 
                                       ? 'text-[#F2A900] bg-amber-500/10 font-medium' 
                                       : 'text-slate-500 hover:text-slate-900 hover:bg-slate-50'
@@ -245,7 +245,7 @@ function SidebarContent({ isOpen, setIsOpen, isDesktopExpanded, setIsDesktopExpa
                     key={link.label}
                     href={link.href}
                     title={!isDesktopExpanded ? link.label : undefined}
-                    className={`flex items-center gap-3 py-3 rounded-lg hover:bg-slate-50 transition-colors text-slate-600 hover:text-slate-900 font-medium ${isDesktopExpanded ? 'px-4' : 'px-4 md:px-0 md:justify-center'}`}
+                    className={`flex items-center gap-3 py-3 rounded-lg hover:bg-slate-50 transition-colors text-slate-600 hover:text-slate-900 font-medium focus:outline-none focus:ring-2 focus:ring-[#F2A900] focus:ring-inset ${isDesktopExpanded ? 'px-4' : 'px-4 md:px-0 md:justify-center'}`}
                     onClick={() => {
                       if (window.innerWidth < 768) setIsOpen(false);
                     }}
