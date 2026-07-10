@@ -112,14 +112,14 @@ function SidebarContent({ isOpen, setIsOpen, isDesktopExpanded, setIsDesktopExpa
       
       {/* Sidebar Content */}
       <aside 
-        className={`fixed inset-y-0 left-0 z-[100] md:z-50 h-screen bg-[#0B1528] text-white shadow-2xl transform transition-transform md:transition-all duration-300 ease-in-out flex flex-col 
+        className={`fixed inset-y-0 left-0 z-[100] md:z-50 h-screen bg-white text-slate-800 border-r border-slate-100 shadow-sm transform transition-transform md:transition-all duration-300 ease-in-out flex flex-col 
           ${isOpen ? 'translate-x-0' : '-translate-x-full'} 
           md:translate-x-0 
           ${isDesktopExpanded ? 'md:w-64' : 'md:w-16'}
           w-[280px] sm:w-[320px]
         `}
       >
-        <div className={`flex items-center h-20 border-b border-slate-800 shrink-0 transition-all duration-300 ease-in-out ${isDesktopExpanded ? 'px-6 justify-between' : 'px-6 justify-between md:px-0 md:justify-center'}`}>
+        <div className={`flex items-center h-20 border-b border-slate-100 shrink-0 transition-all duration-300 ease-in-out ${isDesktopExpanded ? 'px-6 justify-between' : 'px-6 justify-between md:px-0 md:justify-center'}`}>
           <div className={`flex items-center gap-2 ${!isDesktopExpanded ? 'md:hidden' : ''}`}>
              <div className="w-8 h-8 bg-amber-500 rounded flex items-center justify-center font-bold text-slate-900 text-lg shrink-0">
                 CM
@@ -128,17 +128,17 @@ function SidebarContent({ isOpen, setIsOpen, isDesktopExpanded, setIsDesktopExpa
           </div>
           
           <button className="md:hidden" onClick={() => setIsOpen(false)}>
-            <X className="h-6 w-6 text-slate-300" />
+            <X className="h-6 w-6 text-slate-600" />
           </button>
           
           <button 
-            className="hidden md:flex p-2 hover:bg-slate-800 rounded-lg shrink-0" 
+            className="hidden md:flex p-2 hover:bg-slate-50 rounded-lg shrink-0" 
             onClick={() => setIsDesktopExpanded(!isDesktopExpanded)}
           >
             {isDesktopExpanded ? (
-              <PanelLeftClose className="h-5 w-5 text-slate-400 hover:text-white" />
+              <PanelLeftClose className="h-5 w-5 text-slate-500 hover:text-slate-900" />
             ) : (
-              <Menu className="h-6 w-6 text-slate-300 hover:text-white" />
+              <Menu className="h-6 w-6 text-slate-600 hover:text-slate-900" />
             )}
           </button>
         </div>
@@ -149,7 +149,7 @@ function SidebarContent({ isOpen, setIsOpen, isDesktopExpanded, setIsDesktopExpa
             <Link 
               href={topLink.href}
               title={!isDesktopExpanded ? topLink.label : undefined}
-              className={`flex items-center gap-3 py-3 rounded-lg hover:bg-slate-800 transition-colors text-slate-300 hover:text-white font-medium ${isDesktopExpanded ? 'px-4' : 'px-4 md:px-0 md:justify-center'}`}
+              className={`flex items-center gap-3 py-3 rounded-lg hover:bg-slate-50 transition-colors text-slate-600 hover:text-slate-900 font-medium ${isDesktopExpanded ? 'px-4' : 'px-4 md:px-0 md:justify-center'}`}
               onClick={() => {
                 if (window.innerWidth < 768) setIsOpen(false);
               }}
@@ -169,7 +169,7 @@ function SidebarContent({ isOpen, setIsOpen, isDesktopExpanded, setIsDesktopExpa
             {isLoading ? (
               <div className="space-y-2 px-2">
                 {[1, 2, 3].map(i => (
-                  <div key={i} className="h-10 bg-slate-800 rounded animate-pulse" />
+                  <div key={i} className="h-10 bg-slate-100 rounded animate-pulse" />
                 ))}
               </div>
             ) : categories.length === 0 ? (
@@ -188,8 +188,8 @@ function SidebarContent({ isOpen, setIsOpen, isDesktopExpanded, setIsDesktopExpa
                         title={!isDesktopExpanded ? category.name : undefined}
                         className={`flex items-center justify-between py-3 rounded-lg transition-colors font-medium w-full text-left ${
                           isActiveCategory 
-                            ? 'bg-amber-500/10 text-amber-500' 
-                            : 'text-slate-300 hover:bg-slate-800 hover:text-white'
+                            ? 'bg-amber-500/10 text-[#F2A900]' 
+                            : 'text-slate-600 hover:bg-slate-50 hover:text-slate-900'
                         } ${isDesktopExpanded ? 'px-4' : 'px-4 md:px-0 md:justify-center'}`}
                       >
                         <div className={`flex items-center ${isDesktopExpanded ? 'gap-3' : 'gap-3 md:gap-0'}`}>
@@ -212,7 +212,7 @@ function SidebarContent({ isOpen, setIsOpen, isDesktopExpanded, setIsDesktopExpa
                             isExpanded ? 'max-h-96 opacity-100 mt-1' : 'max-h-0 opacity-0'
                           }`}
                         >
-                          <div className="flex flex-col space-y-1 px-4 pb-2 border-l-2 border-slate-800 ml-4">
+                          <div className="flex flex-col space-y-1 px-4 pb-2 border-l-2 border-slate-100 ml-4">
                             {category.subcategories.map((sub) => {
                               const isActiveSub = isActiveCategory && subParam === sub.id;
                               return (
@@ -221,8 +221,8 @@ function SidebarContent({ isOpen, setIsOpen, isDesktopExpanded, setIsDesktopExpa
                                   onClick={() => handleSubCategoryClick(category.id, sub.id)}
                                   className={`text-left pl-4 py-2 text-sm rounded-lg transition-colors whitespace-nowrap ${
                                     isActiveSub 
-                                      ? 'text-amber-500 bg-amber-500/10 font-medium' 
-                                      : 'text-slate-400 hover:text-slate-100 hover:bg-slate-800/50'
+                                      ? 'text-[#F2A900] bg-amber-500/10 font-medium' 
+                                      : 'text-slate-500 hover:text-slate-900 hover:bg-slate-50'
                                   }`}
                                 >
                                   {sub.name}
@@ -240,7 +240,7 @@ function SidebarContent({ isOpen, setIsOpen, isDesktopExpanded, setIsDesktopExpa
           </div>
 
           {/* Bottom Section (Services) */}
-          <div className="pt-6 border-t border-slate-800/60">
+          <div className="pt-6 border-t border-slate-100">
             <nav className="space-y-1">
               {bottomLinks.map((link) => {
                 const Icon = link.icon;
@@ -249,7 +249,7 @@ function SidebarContent({ isOpen, setIsOpen, isDesktopExpanded, setIsDesktopExpa
                     key={link.label}
                     href={link.href}
                     title={!isDesktopExpanded ? link.label : undefined}
-                    className={`flex items-center gap-3 py-3 rounded-lg hover:bg-slate-800 transition-colors text-slate-300 hover:text-white font-medium ${isDesktopExpanded ? 'px-4' : 'px-4 md:px-0 md:justify-center'}`}
+                    className={`flex items-center gap-3 py-3 rounded-lg hover:bg-slate-50 transition-colors text-slate-600 hover:text-slate-900 font-medium ${isDesktopExpanded ? 'px-4' : 'px-4 md:px-0 md:justify-center'}`}
                     onClick={() => {
                       if (window.innerWidth < 768) setIsOpen(false);
                     }}
@@ -271,7 +271,7 @@ function SidebarContent({ isOpen, setIsOpen, isDesktopExpanded, setIsDesktopExpa
 
 export default function Sidebar(props: SidebarProps) {
   return (
-    <Suspense fallback={<div className={`bg-[#0B1528] hidden md:block h-full fixed z-50 ${props.isDesktopExpanded ? 'w-64' : 'w-16'}`}></div>}>
+    <Suspense fallback={<div className={`bg-white border-r border-slate-100 hidden md:block h-full fixed z-50 ${props.isDesktopExpanded ? 'w-64' : 'w-16'}`}></div>}>
       <SidebarContent {...props} />
     </Suspense>
   );
