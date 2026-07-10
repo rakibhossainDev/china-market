@@ -53,7 +53,7 @@ export default async function HorizontalCategoryGroups() {
               <h3 className="text-slate-800 font-bold text-base mb-3 truncate">{group.title}</h3>
               
               <div className="grid grid-cols-2 gap-2.5">
-                {group.items.map((item, idx) => (
+                {group.items.map((item: { name: string; image: string }, idx: number) => (
                   <div key={idx} className="flex flex-col items-center group cursor-pointer">
                     <div className="relative w-full aspect-square bg-slate-50 rounded-xl overflow-hidden border border-slate-100 flex items-center justify-center p-1.5">
                       <img 
