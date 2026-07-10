@@ -4,8 +4,10 @@ import { useState, useEffect } from 'react';
 import { supabase } from '@/lib/supabase';
 import Link from 'next/link';
 import { MessageCircle, Send } from 'lucide-react';
+import { usePathname } from 'next/navigation';
 
 export default function Footer() {
+  const pathname = usePathname();
   const [categories, setCategories] = useState<any[]>([]);
   const [email, setEmail] = useState('');
   const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
@@ -53,6 +55,10 @@ export default function Footer() {
       setStatus('error');
     }
   };
+
+  if (pathname !== '/') {
+    return null;
+  }
 
   return (
     <footer className="w-full flex flex-col mt-auto shrink-0 bg-white text-slate-600 pt-16 pb-8 border-t border-slate-200/60 font-sans">
