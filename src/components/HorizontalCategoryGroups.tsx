@@ -34,7 +34,17 @@ export default async function HorizontalCategoryGroups() {
 
   const activeGroups = categoryGroups.filter(g => g.items.length > 0);
 
-  if (activeGroups.length === 0) return null;
+  if (activeGroups.length === 0) {
+    return (
+      <section className="pb-8">
+        <div className="max-w-7xl mx-auto px-4">
+          <div className="w-full py-12 text-center bg-white rounded-2xl border border-slate-100 p-6">
+            <p className="text-slate-500 text-sm">No active collections found. Please add categories and products from the Admin Dashboard.</p>
+          </div>
+        </div>
+      </section>
+    );
+  }
 
   return (
     <section className="pb-8">
