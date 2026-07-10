@@ -20,6 +20,7 @@ interface Category {
   id: string;
   name: string;
   icon_name: string;
+  sidebar_name?: string;
   subcategories?: SubCategory[];
 }
 
@@ -183,16 +184,16 @@ function SidebarContent({ isOpen, setIsOpen, isDesktopExpanded, setIsDesktopExpa
                     <div key={category.id} className="flex flex-col">
                       <button
                         onClick={() => handleCategoryClick(category.id)}
-                        title={!isDesktopExpanded ? category.name : undefined}
-                        className={`group flex items-center justify-between py-2.5 rounded-lg transition-colors text-[13px] font-medium tracking-wide w-full text-left focus:outline-none focus:ring-2 focus:ring-[#F2A900] focus:ring-inset ${
+                        title={!isDesktopExpanded ? (category.sidebar_name || category.name) : undefined}
+                        className={`group flex items-center justify-between py-2.5 rounded-lg transition-colors text-sm font-medium tracking-wide w-full text-left focus:outline-none focus:ring-2 focus:ring-[#F2A900] focus:ring-inset ${
                           isActiveCategory 
                             ? 'bg-amber-500/10 text-[#F2A900]' 
-                            : 'text-slate-600 hover:bg-slate-50 hover:text-slate-900'
+                            : 'text-slate-600 hover:bg-slate-50 group-hover:text-slate-900'
                         } ${isDesktopExpanded ? 'px-4' : 'px-4 md:px-0 md:justify-center'}`}
                       >
                         <div className={`flex items-center ${isDesktopExpanded ? 'gap-0' : 'gap-0 md:justify-center'}`}>
                           <IconComponent className={`w-5 h-5 mr-2.5 shrink-0 transition-colors ${isActiveCategory ? 'text-[#F2A900]' : 'text-slate-500 group-hover:text-[#F2A900]'}`} />
-                          <span className={`${!isDesktopExpanded ? 'md:hidden' : ''} whitespace-nowrap`}>{category.name}</span>
+                          <span className={`${!isDesktopExpanded ? 'md:hidden' : ''} whitespace-nowrap`}>{category.sidebar_name || category.name}</span>
                         </div>
                         <div className={`${!isDesktopExpanded ? 'md:hidden' : ''} ml-auto pl-2`}>
                           {isExpanded ? (

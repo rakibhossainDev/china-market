@@ -19,10 +19,13 @@ export default async function HorizontalCategoryGroups() {
       
     return {
       id: cat.id,
-      title: `${cat.name} Collection`,
+      title: cat.name,
       items: subCats.map((s: any) => ({
+        id: s.id,
         name: s.name,
-        image: s.image_url || 'https://via.placeholder.com/150'
+        slug: s.slug || '',
+        image_url: s.image_url || 'https://via.placeholder.com/150',
+        category_id: s.category_id
       }))
     };
   });
@@ -44,22 +47,22 @@ export default async function HorizontalCategoryGroups() {
   return (
     <section className="pb-8">
       <div className="max-w-7xl mx-auto">
-        <div className="flex overflow-x-auto gap-6 pb-4 pt-2 snap-x snap-mandatory scrollbar-thin scrollbar-thumb-slate-200 scrollbar-track-transparent w-full max-w-full px-4">
+        <div className="flex overflow-x-auto gap-5 pb-4 pt-2 w-full snap-x snap-mandatory scrollbar-thin scrollbar-thumb-slate-200 scrollbar-track-transparent px-4">
           {activeGroups.map((group) => (
             <div 
               key={group.id} 
-              className="w-[80vw] sm:w-[300px] md:w-[260px] lg:w-[280px] xl:w-[290px] flex-shrink-0 snap-start bg-white rounded-2xl p-3.5 border border-slate-100 shadow-sm flex flex-col justify-between"
+              className="w-[85vw] sm:w-[320px] md:w-[290px] lg:w-[300px] xl:w-[310px] flex-shrink-0 snap-start bg-white border border-slate-100 p-3.5 rounded-md flex flex-col justify-between shadow-sm"
             >
               <h3 className="text-slate-800 font-bold text-base mb-3 truncate">{group.title}</h3>
               
-              <div className="grid grid-cols-2 gap-2.5">
-                {group.items.map((item: { name: string; image: string }, idx: number) => (
+              <div className="grid grid-cols-2 gap-3">
+                {group.items.map((item: { id: number; name: string; slug: string; image_url: string; category_id: number }, idx: number) => (
                   <div key={idx} className="flex flex-col items-center group cursor-pointer">
-                    <div className="relative w-full aspect-square bg-slate-50 rounded-xl overflow-hidden border border-slate-100 flex items-center justify-center p-1.5">
+                    <div className="relative w-full aspect-square bg-slate-50 rounded-md overflow-hidden p-1">
                       <img 
-                        src={item.image} 
+                        src={item.image_url} 
                         alt={item.name} 
-                        className="w-full h-full object-cover rounded-xl"
+                        className="w-full h-full object-cover rounded-md"
                       />
                     </div>
                     <span className="text-xs font-medium text-slate-600 mt-2 text-center truncate w-full px-1">
