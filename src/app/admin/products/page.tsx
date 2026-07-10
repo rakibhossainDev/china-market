@@ -149,11 +149,11 @@ export default function AdminProductsPage() {
   return (
     <div className="space-y-8">
       {/* Header */}
-      <div className="flex justify-between items-center bg-slate-900 p-6 rounded-xl border border-slate-800 shadow-sm">
+      <div className="flex justify-between items-center bg-[#0B1329] p-6 rounded-md border border-slate-800 shadow-sm">
         <h1 className="text-2xl font-bold text-white">Products Management</h1>
         <button 
           onClick={() => setIsModalOpen(true)}
-          className="bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold py-2 px-4 rounded-lg flex items-center gap-2 transition-colors"
+          className="bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold py-2 px-4 rounded-sm flex items-center gap-2 transition-colors"
         >
           <Plus className="w-5 h-5" />
           Add Product
@@ -161,10 +161,10 @@ export default function AdminProductsPage() {
       </div>
 
       {/* Data Table */}
-      <div className="bg-slate-900 border border-slate-800 rounded-xl overflow-hidden shadow-sm">
+      <div className="bg-[#0B1329] border border-slate-800 rounded-md overflow-hidden shadow-sm">
         <div className="overflow-x-auto">
           <table className="w-full text-left text-sm">
-            <thead className="bg-slate-950 text-slate-400 border-b border-slate-800">
+            <thead className="bg-slate-950/50 text-slate-400 border-b border-slate-800">
               <tr>
                 <th className="px-6 py-4 font-semibold">Product</th>
                 <th className="px-6 py-4 font-semibold">Price</th>
@@ -179,13 +179,13 @@ export default function AdminProductsPage() {
                 Array.from({ length: 5 }).map((_, i) => (
                   <tr key={i} className="animate-pulse">
                     <td className="px-6 py-4 flex items-center gap-3">
-                      <div className="w-10 h-10 bg-slate-800 rounded"></div>
-                      <div className="w-32 h-4 bg-slate-800 rounded"></div>
+                      <div className="w-10 h-10 bg-slate-800 rounded-sm"></div>
+                      <div className="w-32 h-4 bg-slate-800 rounded-sm"></div>
                     </td>
-                    <td className="px-6 py-4"><div className="w-16 h-4 bg-slate-800 rounded"></div></td>
-                    <td className="px-6 py-4"><div className="w-10 h-4 bg-slate-800 rounded"></div></td>
-                    <td className="px-6 py-4"><div className="w-12 h-4 bg-slate-800 rounded"></div></td>
-                    <td className="px-6 py-4"><div className="w-20 h-4 bg-slate-800 rounded ml-auto"></div></td>
+                    <td className="px-6 py-4"><div className="w-16 h-4 bg-slate-800 rounded-sm"></div></td>
+                    <td className="px-6 py-4"><div className="w-10 h-4 bg-slate-800 rounded-sm"></div></td>
+                    <td className="px-6 py-4"><div className="w-12 h-4 bg-slate-800 rounded-sm"></div></td>
+                    <td className="px-6 py-4"><div className="w-20 h-4 bg-slate-800 rounded-sm ml-auto"></div></td>
                   </tr>
                 ))
               ) : products.length === 0 ? (
@@ -238,8 +238,8 @@ export default function AdminProductsPage() {
       {/* Add Product Modal */}
       {isModalOpen && (
         <div className="fixed inset-0 bg-black/80 z-50 flex items-center justify-center p-4">
-          <div className="bg-slate-900 border border-slate-800 rounded-2xl w-full max-w-2xl max-h-[90vh] overflow-y-auto shadow-2xl">
-            <div className="flex justify-between items-center p-6 border-b border-slate-800 sticky top-0 bg-slate-900 z-10">
+          <div className="bg-[#0B1329] border border-slate-800 rounded-md w-full max-w-2xl max-h-[90vh] overflow-y-auto shadow-2xl">
+            <div className="flex justify-between items-center p-6 border-b border-slate-800 sticky top-0 bg-[#0B1329] z-10">
               <h2 className="text-xl font-bold text-white">Add New Product</h2>
               <button onClick={() => setIsModalOpen(false)} className="text-slate-400 hover:text-white transition-colors">
                 <X className="w-6 h-6" />
@@ -249,35 +249,35 @@ export default function AdminProductsPage() {
             <form onSubmit={handleSubmit} className="p-6 space-y-5 text-sm">
               <div>
                 <label className="block text-slate-400 mb-1.5">Product Title</label>
-                <input name="title" value={formData.title} onChange={handleInputChange} required placeholder="e.g., Premium Smart Watch" className="w-full bg-slate-950 border border-slate-800 rounded-lg px-4 py-2.5 text-white focus:outline-none focus:border-amber-500 transition-colors" />
+                <input name="title" value={formData.title} onChange={handleInputChange} required placeholder="e.g., Premium Smart Watch" className="w-full bg-[#0F172A] border border-slate-700 rounded-sm px-4 py-2 text-slate-200 focus:outline-none focus:border-[#F2A900] focus:ring-1 focus:ring-[#F2A900] transition-all" />
               </div>
               
               <div className="grid grid-cols-2 gap-5">
                 <div>
                   <label className="block text-slate-400 mb-1.5">Price</label>
-                  <input name="price" value={formData.price} onChange={handleInputChange} required placeholder="e.g., ৳150" className="w-full bg-slate-950 border border-slate-800 rounded-lg px-4 py-2.5 text-white focus:outline-none focus:border-amber-500 transition-colors" />
+                  <input name="price" value={formData.price} onChange={handleInputChange} required placeholder="e.g., ৳150" className="w-full bg-[#0F172A] border border-slate-700 rounded-sm px-4 py-2 text-slate-200 focus:outline-none focus:border-[#F2A900] focus:ring-1 focus:ring-[#F2A900] transition-all" />
                 </div>
                 <div>
                   <label className="block text-slate-400 mb-1.5">Old Price (Optional)</label>
-                  <input name="old_price" value={formData.old_price} onChange={handleInputChange} placeholder="e.g., ৳200" className="w-full bg-slate-950 border border-slate-800 rounded-lg px-4 py-2.5 text-white focus:outline-none focus:border-amber-500 transition-colors" />
+                  <input name="old_price" value={formData.old_price} onChange={handleInputChange} placeholder="e.g., ৳200" className="w-full bg-[#0F172A] border border-slate-700 rounded-sm px-4 py-2 text-slate-200 focus:outline-none focus:border-[#F2A900] focus:ring-1 focus:ring-[#F2A900] transition-all" />
                 </div>
               </div>
 
               <div className="grid grid-cols-2 gap-5">
                 <div>
                   <label className="block text-slate-400 mb-1.5">MOQ (Minimum Order)</label>
-                  <input name="moq" type="number" value={formData.moq} onChange={handleInputChange} required placeholder="e.g., 50" className="w-full bg-slate-950 border border-slate-800 rounded-lg px-4 py-2.5 text-white focus:outline-none focus:border-amber-500 transition-colors" />
+                  <input name="moq" type="number" value={formData.moq} onChange={handleInputChange} required placeholder="e.g., 50" className="w-full bg-[#0F172A] border border-slate-700 rounded-sm px-4 py-2 text-slate-200 focus:outline-none focus:border-[#F2A900] focus:ring-1 focus:ring-[#F2A900] transition-all" />
                 </div>
                 <div>
                   <label className="block text-slate-400 mb-1.5">Available Stock</label>
-                  <input name="stock" type="number" value={formData.stock} onChange={handleInputChange} required placeholder="e.g., 1000" className="w-full bg-slate-950 border border-slate-800 rounded-lg px-4 py-2.5 text-white focus:outline-none focus:border-amber-500 transition-colors" />
+                  <input name="stock" type="number" value={formData.stock} onChange={handleInputChange} required placeholder="e.g., 1000" className="w-full bg-[#0F172A] border border-slate-700 rounded-sm px-4 py-2 text-slate-200 focus:outline-none focus:border-[#F2A900] focus:ring-1 focus:ring-[#F2A900] transition-all" />
                 </div>
               </div>
 
               <div className="grid grid-cols-2 gap-5">
                 <div>
                   <label className="block text-slate-400 mb-1.5">Category</label>
-                  <select name="category_id" value={formData.category_id} onChange={handleInputChange} className="w-full bg-slate-950 border border-slate-800 rounded-lg px-4 py-2.5 text-white focus:outline-none focus:border-amber-500 transition-colors appearance-none">
+                  <select name="category_id" value={formData.category_id} onChange={handleInputChange} className="w-full bg-[#0F172A] border border-slate-700 rounded-sm px-4 py-2 text-slate-200 focus:outline-none focus:border-[#F2A900] focus:ring-1 focus:ring-[#F2A900] transition-all appearance-none">
                     <option value="">Select Category</option>
                     {categories.map(c => (
                       <option key={c.id} value={c.id}>{c.name}</option>
@@ -286,7 +286,7 @@ export default function AdminProductsPage() {
                 </div>
                 <div>
                   <label className="block text-slate-400 mb-1.5">Sub-category</label>
-                  <select name="sub_category_id" value={formData.sub_category_id} onChange={handleInputChange} disabled={!formData.category_id} className="w-full bg-slate-950 border border-slate-800 rounded-lg px-4 py-2.5 text-white focus:outline-none focus:border-amber-500 transition-colors appearance-none disabled:opacity-50">
+                  <select name="sub_category_id" value={formData.sub_category_id} onChange={handleInputChange} disabled={!formData.category_id} className="w-full bg-[#0F172A] border border-slate-700 rounded-sm px-4 py-2 text-slate-200 focus:outline-none focus:border-[#F2A900] focus:ring-1 focus:ring-[#F2A900] transition-all appearance-none disabled:opacity-50">
                     <option value="">Select Sub-category</option>
                     {filteredSubCategories.map(s => (
                       <option key={s.id} value={s.id}>{s.name}</option>
@@ -302,7 +302,7 @@ export default function AdminProductsPage() {
                   multiple 
                   accept="image/*" 
                   onChange={handleFileChange} 
-                  className="w-full bg-slate-950 border border-slate-800 rounded-lg px-4 py-2.5 text-slate-400 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-amber-500/10 file:text-amber-500 hover:file:bg-amber-500/20" 
+                  className="w-full bg-[#0F172A] border border-slate-700 rounded-sm px-4 py-2 text-slate-400 file:mr-4 file:py-2 file:px-4 file:rounded file:border-0 file:text-sm file:font-semibold file:bg-amber-500/10 file:text-amber-500 hover:file:bg-amber-500/20 focus:outline-none focus:border-[#F2A900] focus:ring-1 focus:ring-[#F2A900] transition-all" 
                 />
                 {selectedFiles.length > 0 && (
                   <div className="grid grid-cols-4 gap-4 mt-4">
@@ -324,14 +324,14 @@ export default function AdminProductsPage() {
               
               <div>
                 <label className="block text-slate-400 mb-1.5">Description</label>
-                <textarea name="description" value={formData.description} onChange={handleInputChange} rows={3} placeholder="Product description..." className="w-full bg-slate-950 border border-slate-800 rounded-lg px-4 py-2.5 text-white focus:outline-none focus:border-amber-500 transition-colors"></textarea>
+                <textarea name="description" value={formData.description} onChange={handleInputChange} rows={3} placeholder="Product description..." className="w-full bg-[#0F172A] border border-slate-700 rounded-sm px-4 py-2 text-slate-200 focus:outline-none focus:border-[#F2A900] focus:ring-1 focus:ring-[#F2A900] transition-all"></textarea>
               </div>
               
               <div className="pt-4 border-t border-slate-800 flex justify-end gap-3">
-                <button type="button" onClick={() => setIsModalOpen(false)} className="px-6 py-2 rounded-lg text-slate-300 hover:bg-slate-800 transition-colors">
+                <button type="button" onClick={() => setIsModalOpen(false)} className="px-6 py-2 rounded-sm text-slate-300 hover:bg-slate-800 transition-colors">
                   Cancel
                 </button>
-                <button type="submit" disabled={isSubmitting} className="bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold py-2 px-6 rounded-lg transition-colors disabled:opacity-70 flex items-center gap-2">
+                <button type="submit" disabled={isSubmitting} className="bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold py-2 px-6 rounded-sm transition-colors disabled:opacity-70 flex items-center gap-2">
                   {isSubmitting ? 'Uploading Images...' : 'Save Product'}
                 </button>
               </div>

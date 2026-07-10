@@ -140,14 +140,14 @@ export default function AdminCategoriesPage() {
 
   return (
     <div className="space-y-8">
-      <div className="flex justify-between items-center bg-slate-900 p-6 rounded-xl border border-slate-800 shadow-sm">
+      <div className="flex justify-between items-center bg-[#0B1329] p-6 rounded-md border border-slate-800 shadow-sm">
         <h1 className="text-2xl font-bold text-white tracking-tight">Manage Categories</h1>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-        <div className="lg:col-span-1 space-y-8">
+      <div className="grid grid-cols-1 xl:grid-cols-12 gap-5">
+        <div className="xl:col-span-5 space-y-8">
           {/* Add Category Form */}
-          <div className="bg-slate-900 border border-slate-800 rounded-xl p-6 shadow-sm h-fit">
+          <div className="bg-[#0B1329] border border-slate-800 rounded-md p-6 shadow-sm h-fit">
             <h2 className="text-xl font-bold text-white mb-6">Create Category</h2>
             <form onSubmit={handleAddCategory} className="space-y-5 text-sm">
               <div>
@@ -158,7 +158,7 @@ export default function AdminCategoriesPage() {
                   onChange={(e) => setNewCategoryName(e.target.value)} 
                   required 
                   placeholder="e.g., Electronics" 
-                  className="w-full bg-slate-950 border border-slate-800 rounded-lg px-4 py-2.5 text-white focus:outline-none focus:border-amber-500 transition-colors" 
+                  className="w-full bg-[#0F172A] border border-slate-700 rounded-sm px-4 py-2 text-slate-200 focus:outline-none focus:border-[#F2A900] focus:ring-1 focus:ring-[#F2A900] transition-all" 
                 />
                 <p className="text-xs text-slate-500 mt-1.5">A slug ID will be automatically generated.</p>
               </div>
@@ -170,7 +170,7 @@ export default function AdminCategoriesPage() {
                   value={newCategoryIcon} 
                   onChange={(e) => setNewCategoryIcon(e.target.value)} 
                   placeholder="e.g., Monitor" 
-                  className="w-full bg-slate-950 border border-slate-800 rounded-lg px-4 py-2.5 text-white focus:outline-none focus:border-amber-500 transition-colors" 
+                  className="w-full bg-[#0F172A] border border-slate-700 rounded-sm px-4 py-2 text-slate-200 focus:outline-none focus:border-[#F2A900] focus:ring-1 focus:ring-[#F2A900] transition-all" 
                 />
                 <p className="text-xs text-slate-500 mt-1.5">Lucide icon name to display in the sidebar.</p>
               </div>
@@ -178,7 +178,7 @@ export default function AdminCategoriesPage() {
               <button 
                 type="submit" 
                 disabled={isSubmitting || !newCategoryName.trim()} 
-                className="w-full bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold py-2.5 rounded-lg transition-colors disabled:opacity-50 flex justify-center items-center gap-2"
+                className="w-full bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold py-2.5 rounded-sm transition-colors disabled:opacity-50 flex justify-center items-center gap-2"
               >
                 {isSubmitting ? 'Creating...' : <><Plus className="w-4 h-4" /> Add Category</>}
               </button>
@@ -186,7 +186,7 @@ export default function AdminCategoriesPage() {
           </div>
 
           {/* Add Sub-Category Form */}
-          <div className="bg-slate-900 border border-slate-800 rounded-xl p-6 shadow-sm h-fit">
+          <div className="bg-[#0B1329] border border-slate-800 rounded-md p-6 shadow-sm h-fit">
             <h2 className="text-xl font-bold text-white mb-6">Create Sub-Category</h2>
             <form onSubmit={handleAddSubCategory} className="space-y-5 text-sm">
               <div>
@@ -195,7 +195,7 @@ export default function AdminCategoriesPage() {
                   value={newSubCategoryId} 
                   onChange={(e) => setNewSubCategoryId(e.target.value)} 
                   required 
-                  className="w-full bg-slate-950 border border-slate-800 rounded-lg px-4 py-2.5 text-white focus:outline-none focus:border-amber-500 transition-colors appearance-none"
+                  className="w-full bg-[#0F172A] border border-slate-700 rounded-sm px-4 py-2 text-slate-200 focus:outline-none focus:border-[#F2A900] focus:ring-1 focus:ring-[#F2A900] transition-all appearance-none"
                 >
                   <option value="">Select Category</option>
                   {categories.map(c => (
@@ -212,7 +212,7 @@ export default function AdminCategoriesPage() {
                   onChange={(e) => setNewSubName(e.target.value)} 
                   required 
                   placeholder="e.g., Smart Watches" 
-                  className="w-full bg-slate-950 border border-slate-800 rounded-lg px-4 py-2.5 text-white focus:outline-none focus:border-amber-500 transition-colors" 
+                  className="w-full bg-[#0F172A] border border-slate-700 rounded-sm px-4 py-2 text-slate-200 focus:outline-none focus:border-[#F2A900] focus:ring-1 focus:ring-[#F2A900] transition-all" 
                 />
               </div>
 
@@ -223,14 +223,14 @@ export default function AdminCategoriesPage() {
                   accept="image/*" 
                   onChange={(e) => setNewSubImageFile(e.target.files?.[0] || null)} 
                   required
-                  className="w-full bg-slate-950 border border-slate-800 rounded-lg px-4 py-2.5 text-slate-400 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-amber-500/10 file:text-amber-500 hover:file:bg-amber-500/20" 
+                  className="w-full bg-[#0F172A] border border-slate-700 rounded-sm px-4 py-2 text-slate-400 file:mr-4 file:py-2 file:px-4 file:rounded file:border-0 file:text-sm file:font-semibold file:bg-amber-500/10 file:text-amber-500 hover:file:bg-amber-500/20" 
                 />
               </div>
 
               <button 
                 type="submit" 
                 disabled={isSubmittingSub || !newSubName.trim() || !newSubCategoryId || !newSubImageFile} 
-                className="w-full bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold py-2.5 rounded-lg transition-colors disabled:opacity-50 flex justify-center items-center gap-2"
+                className="w-full bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold py-2.5 rounded-sm transition-colors disabled:opacity-50 flex justify-center items-center gap-2"
               >
                 {isSubmittingSub ? 'Uploading Image...' : <><Plus className="w-4 h-4" /> Add Sub-Category</>}
               </button>
@@ -239,18 +239,18 @@ export default function AdminCategoriesPage() {
         </div>
 
         {/* Categories List */}
-        <div className="lg:col-span-2 space-y-6">
+        <div className="xl:col-span-7 space-y-6">
           {isLoading ? (
             <div className="space-y-4">
               {[1, 2, 3].map((i) => (
-                <div key={i} className="bg-slate-900 border border-slate-800 rounded-xl p-6 shadow-sm animate-pulse flex flex-col gap-4">
-                  <div className="h-6 bg-slate-800 rounded w-1/3"></div>
-                  <div className="h-4 bg-slate-800 rounded w-1/4"></div>
+                <div key={i} className="bg-[#0B1329] border border-slate-800 rounded-md p-6 shadow-sm animate-pulse flex flex-col gap-4">
+                  <div className="h-6 bg-slate-800 rounded-sm w-1/3"></div>
+                  <div className="h-4 bg-slate-800 rounded-sm w-1/4"></div>
                 </div>
               ))}
             </div>
           ) : categories.length === 0 ? (
-            <div className="bg-slate-900 border border-slate-800 rounded-xl p-12 text-center shadow-sm">
+            <div className="bg-[#0B1329] border border-slate-800 rounded-md p-12 text-center shadow-sm">
               <Folder className="w-12 h-12 mx-auto mb-3 text-slate-700" />
               <p className="text-lg text-slate-400">No categories found</p>
             </div>
@@ -259,7 +259,7 @@ export default function AdminCategoriesPage() {
               {categories.map(category => {
                 const subs = subCategories.filter(s => s.category_id === category.id);
                 return (
-                  <div key={category.id} className="bg-slate-900 border border-slate-800 rounded-xl p-6 shadow-sm flex flex-col transition-all hover:border-slate-700">
+                  <div key={category.id} className="bg-[#0B1329] border border-slate-800 rounded-md p-6 shadow-sm flex flex-col transition-all hover:border-slate-700">
                     <div className="flex justify-between items-start mb-4">
                       <div>
                         <h3 className="text-lg font-bold text-white flex items-center gap-2">
@@ -278,7 +278,7 @@ export default function AdminCategoriesPage() {
                       <div className="flex flex-wrap gap-2">
                         {subs.length > 0 ? (
                           subs.map(sub => (
-                            <span key={sub.id} className="bg-slate-800 text-slate-300 text-xs px-2.5 py-1 rounded-md border border-slate-700">
+                            <span key={sub.id} className="bg-[#0F172A] text-slate-300 text-xs px-2.5 py-1 rounded-sm border border-slate-700">
                               {sub.name}
                             </span>
                           ))

@@ -35,14 +35,14 @@ export default async function AdminOrdersPage() {
 
   return (
     <div className="space-y-8">
-      <div className="flex justify-between items-center bg-slate-900 p-6 rounded-xl border border-slate-800 shadow-sm">
+      <div className="flex justify-between items-center bg-[#0B1329] p-6 rounded-md border border-slate-800 shadow-sm">
         <h1 className="text-2xl font-bold text-white tracking-tight">Orders Management</h1>
       </div>
 
-      <div className="bg-slate-900 border border-slate-800 rounded-xl overflow-hidden shadow-sm">
+      <div className="bg-[#0B1329] border border-slate-800 rounded-md overflow-hidden shadow-sm">
         <div className="overflow-x-auto">
           <table className="w-full text-left text-sm">
-            <thead className="bg-slate-950 text-slate-400 border-b border-slate-800">
+            <thead className="bg-slate-950/50 text-slate-400 border-b border-slate-800">
               <tr>
                 <th className="px-6 py-4 font-semibold">Order ID</th>
                 <th className="px-6 py-4 font-semibold">Date</th>

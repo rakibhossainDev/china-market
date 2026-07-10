@@ -73,7 +73,7 @@ export default function AdminRecycleBinPage() {
   return (
     <div className="space-y-8">
       {/* Header */}
-      <div className="flex justify-between items-center bg-slate-900 p-6 rounded-xl border border-slate-800 shadow-sm">
+      <div className="flex justify-between items-center bg-[#0B1329] p-6 rounded-md border border-slate-800 shadow-sm">
         <div className="flex items-center gap-3">
           <div className="w-10 h-10 rounded-lg bg-red-500/10 flex items-center justify-center">
             <Trash2 className="w-5 h-5 text-red-500" />
@@ -112,10 +112,10 @@ export default function AdminRecycleBinPage() {
       </div>
 
       {/* Content */}
-      <div className="bg-slate-900 border border-slate-800 rounded-xl overflow-hidden shadow-sm">
+      <div className="bg-[#0B1329] border border-slate-800 rounded-md overflow-hidden shadow-sm">
         <div className="overflow-x-auto">
           <table className="w-full text-left text-sm">
-            <thead className="bg-slate-950 text-slate-400 border-b border-slate-800">
+            <thead className="bg-slate-950/50 text-slate-400 border-b border-slate-800">
               <tr>
                 <th className="px-6 py-4 font-semibold">Item Name</th>
                 <th className="px-6 py-4 font-semibold">Deleted At</th>
