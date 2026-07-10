@@ -55,7 +55,7 @@ export default function Footer() {
   };
 
   return (
-    <footer className="w-full flex flex-col mt-auto shrink-0 bg-[#070E1A] text-slate-300 pt-16 pb-8 border-t border-slate-800/60 font-sans">
+    <footer className="w-full flex flex-col mt-auto shrink-0 bg-[#0B1528] text-slate-300 pt-16 pb-8 border-t border-slate-800/60 font-sans">
       <div className="max-w-7xl mx-auto px-4 w-full">
         
         {/* Main Grid Split */}

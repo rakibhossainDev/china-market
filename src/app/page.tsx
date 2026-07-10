@@ -96,12 +96,14 @@ export default function Home() {
 
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
             {trendingProducts.map((product) => (
-              <div key={product.id} className="bg-white rounded-xl shadow-sm border border-slate-100 overflow-hidden hover:shadow-lg transition-all group flex flex-col h-full relative">
+              <div key={product.id} className="bg-white rounded-2xl border border-slate-100/80 shadow-sm overflow-hidden hover:-translate-y-1.5 hover:shadow-md hover:border-slate-200/50 transition-all duration-300 ease-out flex flex-col h-full relative group">
                 {/* Product Image */}
-                <div 
-                  className="aspect-square bg-slate-100 relative bg-cover bg-center group-hover:scale-105 transition-transform duration-500"
-                  style={{ backgroundImage: `url(${product.image})` }}
-                >
+                <div className="aspect-square bg-slate-50 relative overflow-hidden flex items-center justify-center p-4">
+                  <img 
+                    src={product.image}
+                    alt={product.title}
+                    className="w-full h-full object-contain group-hover:scale-105 transition-transform duration-500"
+                  />
                   {/* Overlay Badges */}
                   <div className="absolute top-2 left-2 bg-blue-600/90 backdrop-blur-sm text-white text-[10px] md:text-xs font-bold px-2 py-1 rounded shadow-sm flex items-center gap-1">
                     <Plane className="h-3 w-3" />

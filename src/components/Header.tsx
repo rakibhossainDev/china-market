@@ -1,6 +1,6 @@
 "use client";
 
-import { Search, Menu, ShoppingCart, Camera } from 'lucide-react';
+import { Search, Menu, ShoppingCart, Camera, Heart, User } from 'lucide-react';
 import Link from 'next/link';
 
 export default function Header({ onMenuClick }: { onMenuClick: () => void }) {
@@ -42,24 +42,43 @@ export default function Header({ onMenuClick }: { onMenuClick: () => void }) {
             <input
               type="text"
               placeholder="Search products by name, SKU, or category..."
-              className="w-full bg-slate-100 text-slate-900 rounded-full py-2.5 pl-12 pr-[120px] focus:outline-none focus:ring-2 focus:ring-amber-500 transition-shadow"
+              className="w-full bg-slate-100 text-slate-900 rounded-full py-2.5 pl-12 pr-[120px] focus:outline-none focus:ring-2 focus:ring-[#F2A900] transition-shadow"
             />
             <Search className="absolute left-4 top-3 h-5 w-5 text-slate-400" />
-            <Camera className="absolute right-24 top-1/2 -translate-y-1/2 text-slate-400 cursor-pointer hover:text-orange-500 transition-colors z-10" />
-            <button className="absolute right-1 top-1 bg-amber-500 hover:bg-amber-600 text-blue-900 font-semibold py-1.5 px-4 rounded-full transition-colors text-sm">
+            <Camera className="absolute right-24 top-1/2 -translate-y-1/2 text-slate-400 cursor-pointer hover:text-[#F2A900] transition-colors z-10" />
+            <button className="absolute right-1 top-1 bg-[#F2A900] hover:bg-[#D99700] text-slate-950 font-semibold py-1.5 px-4 rounded-full transition-colors text-sm">
               Search
             </button>
           </div>
         </div>
 
-        {/* Quick actions (Cart) */}
-        <div className="flex items-center shrink-0 ml-auto md:ml-0">
-          <Link href="/cart" className="relative p-1.5 md:p-2 text-slate-600 hover:bg-slate-100 rounded-full transition-colors inline-block">
-            <ShoppingCart className="h-5 w-5 md:h-6 md:w-6" />
-            <span className="absolute top-0 right-0 bg-amber-500 text-blue-900 text-[10px] md:text-xs font-bold w-4 h-4 rounded-full flex items-center justify-center border border-white">
-              0
-            </span>
-          </Link>
+        {/* Actions & Profile */}
+        <div className="flex items-center shrink-0 ml-auto md:ml-0 gap-3 md:gap-6">
+          <div className="flex items-center gap-1 md:gap-3">
+            <Link href="/wishlist" className="p-1.5 md:p-2 text-slate-600 hover:text-[#F2A900] hover:bg-slate-100 rounded-full transition-colors hidden md:block" title="Wishlist">
+              <Heart className="h-5 w-5 md:h-6 md:w-6" />
+            </Link>
+            <Link href="/cart" className="relative p-1.5 md:p-2 text-slate-600 hover:text-[#F2A900] hover:bg-slate-100 rounded-full transition-colors inline-block" title="Cart">
+              <ShoppingCart className="h-5 w-5 md:h-6 md:w-6" />
+              <span className="absolute top-0 right-0 bg-[#F2A900] text-slate-950 text-[10px] md:text-xs font-bold w-4 h-4 rounded-full flex items-center justify-center border border-white">
+                0
+              </span>
+            </Link>
+          </div>
+
+          {/* User Profile Card (Desktop Only) */}
+          <div className="hidden md:flex items-center gap-3 pl-6 border-l border-slate-200">
+            <div className="w-10 h-10 rounded-full bg-slate-100 flex items-center justify-center overflow-hidden shrink-0 border border-slate-200">
+              <User className="h-5 w-5 text-slate-400" />
+            </div>
+            <div className="flex flex-col">
+              <span className="text-sm font-bold text-slate-900 leading-none mb-1">Rakib Hossain</span>
+              <span className="text-xs text-emerald-600 font-medium flex items-center gap-1 leading-none">
+                <span className="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
+                +880 17... (Verified)
+              </span>
+            </div>
+          </div>
         </div>
       </div>
     </header>

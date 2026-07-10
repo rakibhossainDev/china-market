@@ -112,7 +112,7 @@ function SidebarContent({ isOpen, setIsOpen, isDesktopExpanded, setIsDesktopExpa
       
       {/* Sidebar Content */}
       <aside 
-        className={`fixed inset-y-0 left-0 z-[100] md:z-50 h-screen bg-slate-900 text-white shadow-2xl transform transition-transform md:transition-all duration-300 ease-in-out flex flex-col 
+        className={`fixed inset-y-0 left-0 z-[100] md:z-50 h-screen bg-[#0B1528] text-white shadow-2xl transform transition-transform md:transition-all duration-300 ease-in-out flex flex-col 
           ${isOpen ? 'translate-x-0' : '-translate-x-full'} 
           md:translate-x-0 
           ${isDesktopExpanded ? 'md:w-64' : 'md:w-16'}
@@ -271,7 +271,7 @@ function SidebarContent({ isOpen, setIsOpen, isDesktopExpanded, setIsDesktopExpa
 
 export default function Sidebar(props: SidebarProps) {
   return (
-    <Suspense fallback={<div className={`bg-slate-900 hidden md:block h-full fixed z-50 ${props.isDesktopExpanded ? 'w-64' : 'w-16'}`}></div>}>
+    <Suspense fallback={<div className={`bg-[#0B1528] hidden md:block h-full fixed z-50 ${props.isDesktopExpanded ? 'w-64' : 'w-16'}`}></div>}>
       <SidebarContent {...props} />
     </Suspense>
   );
