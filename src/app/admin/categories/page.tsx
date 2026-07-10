@@ -50,10 +50,16 @@ export default function AdminCategoriesPage() {
     
     const slug = newCategoryName.trim().toLowerCase().replace(/[^a-z0-9]+/g, '-');
 
+    const rawIcon = newCategoryIcon.trim() || 'Folder';
+    const pascalIconName = rawIcon
+      .split(/[-_\s]+/)
+      .map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
+      .join('');
+
     const { error } = await supabase.from('categories').insert([{
       slug: slug,
       name: newCategoryName.trim(),
-      icon_name: newCategoryIcon.trim() || 'Folder'
+      icon_name: pascalIconName
     }]);
 
     setIsSubmitting(false);

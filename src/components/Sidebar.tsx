@@ -19,7 +19,7 @@ const bottomLinks = [
 interface Category {
   id: string;
   name: string;
-  icon: string;
+  icon_name: string;
   subcategories?: SubCategory[];
 }
 
@@ -175,7 +175,9 @@ function SidebarContent({ isOpen, setIsOpen, isDesktopExpanded, setIsDesktopExpa
                 {categories.map((category) => {
                   const isActiveCategory = categoryParam === category.id;
                   const isExpanded = expandedCategory === category.id && isDesktopExpanded;
-                  const Icon = (LucideIcons as any)[category.icon] || LucideIcons.Folder;
+                  const iconString = category.icon_name || 'Folder';
+                  const pascalIcon = iconString.charAt(0).toUpperCase() + iconString.slice(1);
+                  const IconComponent = (LucideIcons as any)[pascalIcon] || LucideIcons.Folder;
 
                   return (
                     <div key={category.id} className="flex flex-col">
@@ -189,7 +191,7 @@ function SidebarContent({ isOpen, setIsOpen, isDesktopExpanded, setIsDesktopExpa
                         } ${isDesktopExpanded ? 'px-4' : 'px-4 md:px-0 md:justify-center'}`}
                       >
                         <div className={`flex items-center ${isDesktopExpanded ? 'gap-0' : 'gap-0 md:justify-center'}`}>
-                          <Icon className={`w-5 h-5 mr-3 shrink-0 transition-colors ${isActiveCategory ? 'text-[#F2A900]' : 'text-slate-500 group-hover:text-[#F2A900]'}`} />
+                          <IconComponent className={`w-5 h-5 mr-3 shrink-0 transition-colors ${isActiveCategory ? 'text-[#F2A900]' : 'text-slate-500 group-hover:text-[#F2A900]'}`} />
                           <span className={`${!isDesktopExpanded ? 'md:hidden' : ''} whitespace-nowrap`}>{category.name}</span>
                         </div>
                         <div className={`${!isDesktopExpanded ? 'md:hidden' : ''}`}>
