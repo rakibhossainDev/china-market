@@ -39,11 +39,11 @@ export default async function HorizontalCategoryGroups() {
   return (
     <section className="pb-8">
       <div className="max-w-7xl mx-auto">
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-5 w-full max-w-full pb-4">
+        <div className="flex overflow-x-auto gap-4 pb-4 snap-x snap-mandatory scrollbar-hide md:grid md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 md:gap-6 md:pb-0 md:overflow-x-visible w-full">
           {activeGroups.map((group) => (
             <div 
               key={group.id} 
-              className="bg-white rounded-2xl p-4 border border-slate-100 shadow-sm flex flex-col justify-between"
+              className="w-[88vw] sm:w-[360px] flex-shrink-0 snap-start md:w-full bg-white rounded-2xl p-4 border border-slate-100 shadow-sm flex flex-col justify-between"
             >
               <h3 className="text-slate-800 font-bold text-lg mb-4 truncate">{group.title}</h3>
               
