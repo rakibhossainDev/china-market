@@ -37,24 +37,24 @@ export default async function HorizontalCategoryGroups() {
   if (activeGroups.length === 0) return null;
 
   return (
-    <section className="pb-8 bg-slate-50">
+    <section className="pb-8">
       <div className="max-w-7xl mx-auto">
         <div className="flex overflow-x-auto space-x-4 px-4 sm:px-6 lg:px-8 pb-4 scrollbar-hide snap-x snap-mandatory">
           {activeGroups.map((group) => (
             <div 
               key={group.id} 
-              className="w-[88%] sm:w-[45%] md:w-[31%] flex-shrink-0 bg-white rounded-2xl p-4 border border-slate-100/80 shadow-sm snap-center hover:-translate-y-1.5 hover:shadow-md hover:border-slate-200/50 transition-all duration-300 ease-out"
+              className="w-[88%] sm:w-[45%] md:w-[31%] flex-shrink-0 bg-white rounded-2xl p-5 border border-slate-100 shadow-[0_2px_8px_rgba(0,0,0,0.04)] snap-center"
             >
               <h3 className="text-orange-600 font-bold text-base md:text-lg mb-4">{group.title}</h3>
               
               <div className="grid grid-cols-2 gap-3">
                 {group.items.map((item, idx) => (
                   <div key={idx} className="flex flex-col items-center group cursor-pointer">
-                    <div className="bg-slate-50 rounded-xl flex items-center justify-center w-full aspect-square group-hover:bg-slate-100 transition-colors overflow-hidden">
+                    <div className="bg-slate-50 rounded-xl p-2 flex items-center justify-center w-full aspect-square group-hover:bg-slate-100/80 transition-colors overflow-hidden">
                       <img 
                         src={item.image} 
                         alt={item.name} 
-                        className="w-full h-full aspect-square object-contain p-2 group-hover:scale-105 transition-transform duration-300"
+                        className="w-full h-full object-contain group-hover:scale-105 transition-transform duration-300"
                       />
                     </div>
                     <span className="text-xs md:text-sm text-center text-slate-700 font-medium mt-1.5 group-hover:text-blue-600 transition-colors line-clamp-1">

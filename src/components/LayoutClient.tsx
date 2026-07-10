@@ -17,7 +17,7 @@ export default function LayoutClient({ children }: { children: React.ReactNode }
   }
 
   return (
-    <div className="flex h-screen overflow-hidden bg-slate-50 font-sans text-slate-900">
+    <div className="flex h-screen overflow-hidden bg-[#F8FAFC] font-sans text-slate-900">
       <Sidebar 
         isOpen={isMobileSidebarOpen} 
         setIsOpen={setIsMobileSidebarOpen} 

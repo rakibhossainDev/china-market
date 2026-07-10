@@ -72,7 +72,7 @@ const trendingProducts = [
 
 export default function Home() {
   return (
-    <div className="bg-slate-50 min-h-screen flex flex-col">
+    <div className="bg-[#F8FAFC] min-h-screen flex flex-col">
       <main className="flex-1">
         {/* 1. Hero Slider */}
         <HeroSlider />
