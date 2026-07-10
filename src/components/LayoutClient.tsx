@@ -25,9 +25,9 @@ export default function LayoutClient({ children }: { children: React.ReactNode }
         setIsDesktopExpanded={setIsDesktopExpanded}
       />
       
-      <div className={`flex-1 flex flex-col overflow-auto w-full relative transition-all duration-300 ease-in-out ${isDesktopExpanded ? 'md:ml-64' : 'md:ml-16'}`}>
+      <div className={`flex-1 flex flex-col overflow-x-hidden relative transition-all duration-300 ease-in-out ${isDesktopExpanded ? 'md:ml-64 md:w-[calc(100%-16rem)]' : 'md:ml-16 md:w-[calc(100%-4rem)]'}`}>
         <Header onMenuClick={() => setIsMobileSidebarOpen(true)} />
-        <main className="flex-1 shrink-0">{children}</main>
+        <main className="flex-1 shrink-0 w-full max-w-full px-4 md:px-6 lg:px-8">{children}</main>
         <Footer />
         <MobileBottomNav />
       </div>

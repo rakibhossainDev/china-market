@@ -39,7 +39,7 @@ export default async function HorizontalCategoryGroups() {
   return (
     <section className="pb-8">
       <div className="max-w-7xl mx-auto">
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-6 w-full px-2 sm:px-4 pb-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-5 w-full max-w-full pb-4">
           {activeGroups.map((group) => (
             <div 
               key={group.id} 
