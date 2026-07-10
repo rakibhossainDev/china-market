@@ -144,10 +144,10 @@ export default function AdminCategoriesPage() {
         <h1 className="text-2xl font-bold text-white tracking-tight">Manage Categories</h1>
       </div>
 
-      <div className="grid grid-cols-1 xl:grid-cols-12 gap-5">
-        <div className="xl:col-span-5 space-y-8">
+      <div className="grid grid-cols-1 xl:grid-cols-12 gap-5 w-full">
+        <div className="w-full xl:col-span-5 space-y-8">
           {/* Add Category Form */}
-          <div className="bg-[#0B1329] border border-slate-800 rounded-md p-6 shadow-sm h-fit">
+          <div className="w-full bg-[#0B1329] border border-slate-800 rounded-md p-6 shadow-sm h-fit">
             <h2 className="text-xl font-bold text-white mb-6">Create Category</h2>
             <form onSubmit={handleAddCategory} className="space-y-5 text-sm">
               <div>
@@ -186,7 +186,7 @@ export default function AdminCategoriesPage() {
           </div>
 
           {/* Add Sub-Category Form */}
-          <div className="bg-[#0B1329] border border-slate-800 rounded-md p-6 shadow-sm h-fit">
+          <div className="w-full bg-[#0B1329] border border-slate-800 rounded-md p-6 shadow-sm h-fit">
             <h2 className="text-xl font-bold text-white mb-6">Create Sub-Category</h2>
             <form onSubmit={handleAddSubCategory} className="space-y-5 text-sm">
               <div>
@@ -239,7 +239,7 @@ export default function AdminCategoriesPage() {
         </div>
 
         {/* Categories List */}
-        <div className="xl:col-span-7 space-y-6">
+        <div className="w-full xl:col-span-7 space-y-6">
           {isLoading ? (
             <div className="space-y-4">
               {[1, 2, 3].map((i) => (
