@@ -71,13 +71,13 @@ export default function Header({ onMenuClick }: { onMenuClick: () => void }) {
             </Link>
 
             {/* Mobile User Profile Slot */}
-            <Link href="/profile" className="p-1.5 text-slate-600 hover:text-[#F2A900] hover:bg-slate-100 rounded-full transition-colors md:hidden" title="Profile">
+            <Link href="/login" className="p-1.5 text-slate-600 hover:text-[#F2A900] hover:bg-slate-100 rounded-full transition-colors md:hidden" title="Profile">
               <User className="h-5 w-5" />
             </Link>
           </div>
 
           {/* User Profile Card (Desktop Only) */}
-          <div className="hidden md:flex items-center gap-3 pl-6 border-l border-slate-200">
+          <Link href="/login" className="hidden md:flex items-center gap-3 pl-6 border-l border-slate-200 hover:opacity-80 transition-opacity cursor-pointer">
             <div className="w-10 h-10 rounded-full bg-slate-100 flex items-center justify-center overflow-hidden shrink-0 border border-slate-200">
               <User className="h-5 w-5 text-slate-400" />
             </div>
@@ -88,7 +88,7 @@ export default function Header({ onMenuClick }: { onMenuClick: () => void }) {
                 +880 17... (Verified)
               </span>
             </div>
-          </div>
+          </Link>
         </div>
       </div>
 
