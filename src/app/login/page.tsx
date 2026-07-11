@@ -4,75 +4,51 @@ import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { supabase } from '@/lib/supabase';
 import Link from 'next/link';
-import { User, KeyRound } from 'lucide-react';
-
-type ViewState = 'request' | 'verify';
+import { Phone } from 'lucide-react';
 
 export default function LoginPage() {
   const router = useRouter();
   
-  const [viewState, setViewState] = useState<ViewState>('request');
-  const [email, setEmail] = useState('');
-  const [otpToken, setOtpToken] = useState('');
-  
+  const [phone, setPhone] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [errorMsg, setErrorMsg] = useState('');
-  const [successMsg, setSuccessMsg] = useState('');
 
-  const handleSendOTP = async (e: React.FormEvent) => {
+  const handleInstantLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     setErrorMsg('');
-    setSuccessMsg('');
     
-    if (!email) {
-      setErrorMsg('Please enter your email address.');
+    if (!phone) {
+      setErrorMsg('Please enter your phone number.');
       return;
     }
 
     setIsLoading(true);
     
     try {
-      const { error } = await supabase.auth.signInWithOtp({ 
-        email, 
-        options: { shouldCreateUser: true } 
+      const dynamicPassword = `${phone}_china_market_secure_pass`;
+      
+      // First, attempt a standard password sign-in
+      const { data, error: signInError } = await supabase.auth.signInWithPassword({
+        phone: phone,
+        password: dynamicPassword,
       });
 
-      if (error) {
-        setErrorMsg(error.message);
+      if (signInError) {
+        // If signInError indicates the user does not exist (or any error in this instant flow), automatically trigger sign-up
+        const { error: signUpError } = await supabase.auth.signUp({
+          phone: phone,
+          password: dynamicPassword,
+        });
+
+        if (signUpError) {
+          setErrorMsg(signUpError.message);
+        } else {
+          // Signup & instant session allocation successful
+          router.push('/');
+          router.refresh();
+        }
       } else {
-        setSuccessMsg('Verification code sent! Please check your email.');
-        setViewState('verify');
-      }
-    } catch (err: any) {
-      setErrorMsg('An unexpected error occurred. Please try again.');
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
-  const handleVerifyOTP = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setErrorMsg('');
-    setSuccessMsg('');
-
-    if (!otpToken) {
-      setErrorMsg('Please enter the verification code.');
-      return;
-    }
-
-    setIsLoading(true);
-
-    try {
-      const { error } = await supabase.auth.verifyOtp({ 
-        email, 
-        token: otpToken, 
-        type: 'email' 
-      });
-
-      if (error) {
-        setErrorMsg(error.message);
-      } else {
-        // Successful login
+        // Sign in successful
         router.push('/');
         router.refresh();
       }
@@ -95,12 +71,10 @@ export default function LoginPage() {
             </span>
           </Link>
           <h1 className="mt-4 text-lg font-semibold text-slate-800">
-            {viewState === 'request' ? 'Sign in to your account' : 'Verify your email'}
+            Sign in to your account
           </h1>
           <p className="mt-1 text-sm text-slate-500">
-            {viewState === 'request' 
-              ? 'Enter your email to receive a secure login code' 
-              : `We sent a code to ${email || 'your email'}`}
+            Enter your phone number for instant access
           </p>
         </div>
 
@@ -110,105 +84,39 @@ export default function LoginPage() {
             {errorMsg}
           </div>
         )}
-        
-        {successMsg && viewState === 'verify' && (
-          <div className="w-full p-3 mb-4 text-sm text-emerald-600 bg-emerald-50 border border-emerald-200 rounded">
-            {successMsg}
-          </div>
-        )}
 
         {/* Forms */}
-        {viewState === 'request' ? (
-          <form onSubmit={handleSendOTP} className="w-full space-y-4">
-            <div>
-              <label htmlFor="email" className="block text-sm font-medium text-slate-700 mb-1">
-                Email Address
-              </label>
-              <div className="relative">
-                <User className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 h-4 w-4" />
-                <input
-                  id="email"
-                  type="email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  placeholder="you@example.com"
-                  required
-                  className="w-full pl-10 pr-3 py-2 border border-slate-200 bg-slate-50 text-sm text-slate-800 rounded focus:border-[#F2A900] focus:ring-1 focus:ring-[#F2A900] outline-none"
-                />
-              </div>
+        <form onSubmit={handleInstantLogin} className="w-full space-y-4">
+          <div>
+            <label htmlFor="phone" className="block text-sm font-medium text-slate-700 mb-1">
+              Phone Number / মোবাইল নাম্বার
+            </label>
+            <div className="relative">
+              <Phone className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 h-4 w-4" />
+              <input
+                id="phone"
+                type="tel"
+                value={phone}
+                onChange={(e) => setPhone(e.target.value)}
+                placeholder="01XXXXXXXXX"
+                required
+                className="w-full pl-10 pr-3 py-2 border border-slate-200 bg-slate-50 text-sm text-slate-800 rounded focus:border-[#F2A900] focus:ring-1 focus:ring-[#F2A900] outline-none"
+              />
             </div>
-            
-            <button
-              type="submit"
-              disabled={isLoading}
-              className="w-full bg-[#F2A900] hover:bg-[#D99600] text-white font-bold py-2.5 rounded text-sm transition-colors mt-4 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
-            >
-              {isLoading && (
-                <div className="h-4 w-4 rounded-full border-2 border-white border-t-transparent animate-spin"></div>
-              )}
-              {isLoading ? 'Sending Code...' : 'Send Verification Code'}
-            </button>
-          </form>
-        ) : (
-          <form onSubmit={handleVerifyOTP} className="w-full space-y-4">
-            <div>
-              <label htmlFor="otp" className="block text-sm font-medium text-slate-700 mb-1">
-                6-Digit Code
-              </label>
-              <div className="relative">
-                <KeyRound className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 h-4 w-4" />
-                <input
-                  id="otp"
-                  type="text"
-                  value={otpToken}
-                  onChange={(e) => setOtpToken(e.target.value)}
-                  placeholder="123456"
-                  required
-                  className="w-full pl-10 pr-3 py-2 border border-slate-200 bg-slate-50 text-sm text-slate-800 rounded focus:border-[#F2A900] focus:ring-1 focus:ring-[#F2A900] outline-none tracking-widest font-mono"
-                />
-              </div>
-            </div>
-            
-            <button
-              type="submit"
-              disabled={isLoading}
-              className="w-full bg-[#F2A900] hover:bg-[#D99600] text-white font-bold py-2.5 rounded text-sm transition-colors mt-4 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
-            >
-              {isLoading && (
-                <div className="h-4 w-4 rounded-full border-2 border-white border-t-transparent animate-spin"></div>
-              )}
-              {isLoading ? 'Verifying...' : 'Verify & Login'}
-            </button>
-          </form>
-        )}
+          </div>
+          
+          <button
+            type="submit"
+            disabled={isLoading}
+            className="w-full bg-[#F2A900] hover:bg-[#D99600] text-white font-bold py-2.5 rounded text-sm transition-colors mt-4 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+          >
+            {isLoading && (
+              <div className="h-4 w-4 rounded-full border-2 border-white border-t-transparent animate-spin"></div>
+            )}
+            {isLoading ? 'Processing...' : 'Instant Login / Sign Up'}
+          </button>
+        </form>
 
-        {/* Step Navigation Links */}
-        <div className="mt-6 text-sm text-center">
-          {viewState === 'request' ? (
-            <button 
-              onClick={() => {
-                setViewState('verify');
-                setErrorMsg('');
-                setSuccessMsg('');
-              }} 
-              className="text-slate-500 hover:text-[#F2A900] transition-colors"
-            >
-              Already has an OTP ? Click Here
-            </button>
-          ) : (
-            <button 
-              onClick={() => {
-                setViewState('request');
-                setErrorMsg('');
-                setSuccessMsg('');
-                setOtpToken('');
-              }} 
-              className="text-slate-500 hover:text-[#F2A900] transition-colors"
-            >
-              Change Email Address
-            </button>
-          )}
-        </div>
       </div>
     </div>
   );
