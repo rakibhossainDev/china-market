@@ -25,7 +25,7 @@ export default function LoginPage() {
     setIsLoading(true);
     
     try {
-      const virtualEmail = `${phone.trim()}@china-market.local`;
+      const virtualEmail = `${phone.trim()}@gmail.com`;
       const dynamicPassword = `${phone.trim()}_china_market_secure_pass`;
       
       // First, attempt a standard password sign-in
