@@ -65,7 +65,7 @@ export default function Footer() {
       <div className="max-w-7xl mx-auto px-4 w-full">
         
         {/* Main Layout Grid */}
-        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-8 mb-16">
+        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-8 py-10 text-slate-600">
             
             {/* Column 1: Shop */}
             <div className="flex flex-col gap-4">
@@ -197,10 +197,18 @@ export default function Footer() {
         </div>
 
         {/* Bottom Legal Bar */}
-        <div className="pt-8 border-t border-slate-200/60 flex flex-col md:flex-row items-center justify-between gap-4">
-          <p className="text-slate-500 text-sm font-medium">
-            © 2026 China Market Wholesale. All rights reserved.
-          </p>
+        <div className="border-t border-slate-100 pt-6 flex flex-col md:flex-row justify-between items-center gap-4 text-xs text-slate-500 mb-8">
+          <div>
+            © 2026 China Market Wholesale. All rights reserved. | Developed by{' '}
+            <a 
+              href="https://www.fixzensolutions.com" 
+              target="_blank" 
+              rel="noopener noreferrer" 
+              className="text-amber-500 hover:underline font-medium transition-colors"
+            >
+              Fixzen Solutions
+            </a>
+          </div>
           <div className="flex items-center gap-4 text-slate-500 text-sm font-medium">
             <Link href="/terms" className="hover:text-slate-800 transition-colors">Terms of Service</Link>
             <span className="opacity-50">|</span>
