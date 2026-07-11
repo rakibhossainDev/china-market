@@ -25,18 +25,19 @@ export default function LoginPage() {
     setIsLoading(true);
     
     try {
-      const dynamicPassword = `${phone}_china_market_secure_pass`;
+      const virtualEmail = `${phone.trim()}@china-market.local`;
+      const dynamicPassword = `${phone.trim()}_china_market_secure_pass`;
       
       // First, attempt a standard password sign-in
       const { data, error: signInError } = await supabase.auth.signInWithPassword({
-        phone: phone,
+        email: virtualEmail,
         password: dynamicPassword,
       });
 
       if (signInError) {
         // If signInError indicates the user does not exist (or any error in this instant flow), automatically trigger sign-up
         const { error: signUpError } = await supabase.auth.signUp({
-          phone: phone,
+          email: virtualEmail,
           password: dynamicPassword,
         });
 
