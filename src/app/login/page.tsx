@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { supabase } from '@/lib/supabase';
 import Link from 'next/link';
-import { Phone } from 'lucide-react';
+import { Phone, CheckCircle2 } from 'lucide-react';
 
 export default function LoginPage() {
   const router = useRouter();
@@ -12,6 +12,7 @@ export default function LoginPage() {
   const [phone, setPhone] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [errorMsg, setErrorMsg] = useState('');
+  const [showSuccess, setShowSuccess] = useState(false);
 
   const handleInstantLogin = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -45,13 +46,19 @@ export default function LoginPage() {
           setErrorMsg(signUpError.message);
         } else {
           // Signup & instant session allocation successful
-          router.push('/');
-          router.refresh();
+          setShowSuccess(true);
+          setTimeout(() => {
+            router.push('/');
+            router.refresh();
+          }, 1500);
         }
       } else {
         // Sign in successful
-        router.push('/');
-        router.refresh();
+        setShowSuccess(true);
+        setTimeout(() => {
+          router.push('/');
+          router.refresh();
+        }, 1500);
       }
     } catch (err: any) {
       setErrorMsg('An unexpected error occurred. Please try again.');
@@ -119,6 +126,13 @@ export default function LoginPage() {
         </form>
 
       </div>
+
+      {showSuccess && (
+        <div className="fixed top-6 left-1/2 -translate-x-1/2 bg-emerald-600 text-white px-4 py-3 rounded shadow-lg flex items-center gap-2.5 z-50 animate-in fade-in slide-in-from-top-5 duration-300 text-sm font-bold tracking-wide">
+          <CheckCircle2 className="w-5 h-5 text-emerald-100 flex-shrink-0"/>
+          <span>Login Successful! Redirecting...</span>
+        </div>
+      )}
     </div>
   );
 }
