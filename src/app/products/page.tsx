@@ -47,17 +47,17 @@ export default async function ProductsPage({ searchParams }: Props) {
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4 md:gap-6">
           {products.map((product) => (
             <Link key={product.id} href={`/products/${product.id}`} className="group relative overflow-hidden bg-white border border-slate-100 p-3 rounded-xl shadow-sm hover:shadow-md transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-[#F2A900] focus:ring-inset flex flex-col">
-              <div className="aspect-square bg-slate-50 relative overflow-hidden flex items-center justify-center rounded-lg mb-3">
+              <div className="relative w-full aspect-square bg-slate-50 overflow-hidden rounded-t-xl mb-3">
                 <img 
                   src={product.images && product.images.length > 0 ? product.images[0] : '/placeholder-image.png'} 
                   alt={product.title} 
-                  className="w-full h-full object-cover transition-all duration-500 ease-in-out group-hover:scale-105"
+                  className="w-full h-full object-cover object-center transition-all duration-500 ease-in-out group-hover:scale-105"
                 />
                 {product.images && product.images.length > 1 && (
                   <img 
                     src={product.images[1]} 
                     alt={`${product.title} alternate`} 
-                    className="absolute inset-0 h-full w-full object-cover opacity-0 transition-all duration-500 ease-in-out group-hover:opacity-100 group-hover:scale-105"
+                    className="absolute inset-0 h-full w-full object-cover object-center opacity-0 transition-all duration-500 ease-in-out group-hover:opacity-100 group-hover:scale-105"
                   />
                 )}
               </div>
