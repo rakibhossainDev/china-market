@@ -54,26 +54,32 @@ export default async function HorizontalCategoryGroups() {
               key={group.id} 
               className="w-[85vw] sm:w-[320px] md:w-[290px] lg:w-[300px] xl:w-[310px] flex-shrink-0 snap-start bg-white border border-slate-100 p-2.5 sm:p-3.5 rounded-md flex flex-col justify-between shadow-sm"
             >
-              <h3 className="text-sm sm:text-base font-bold text-slate-950 mb-2.5 truncate">{group.title}</h3>
+              <Link href={`/products?category=${group.id}`} className="block mb-2.5 hover:opacity-80 transition-opacity focus:outline-none focus:ring-2 focus:ring-[#F2A900] rounded">
+                <h3 className="text-sm sm:text-base font-bold text-slate-950 truncate">{group.title}</h3>
+              </Link>
               
               <div className="grid grid-cols-2 gap-2 sm:gap-3">
-                {group.items.map((item: { id: number; name: string; slug: string; image_url: string | null; category_id: number }, idx: number) => (
-                  <div key={idx} className="flex flex-col items-center group cursor-pointer">
-                    <div className="relative w-full aspect-square bg-slate-50 rounded-md overflow-hidden flex items-center justify-center border border-slate-100">
+                {group.items.map((item: { id: number; name: string; slug: string; image_url: string | null; category_id: number }) => (
+                  <Link 
+                    key={item.id} 
+                    href={`/products?category=${group.id}&sub=${item.id}`}
+                    className="flex flex-col items-center group cursor-pointer block text-center focus:outline-none focus:ring-2 focus:ring-[#F2A900] rounded"
+                  >
+                    <div className="relative w-full aspect-square bg-slate-50 rounded-md overflow-hidden flex items-center justify-center border border-slate-100 group-hover:border-amber-300 transition-colors">
                       {item.image_url ? (
                         <img 
                           src={item.image_url} 
                           alt={item.name} 
-                          className="w-full h-full object-cover"
+                          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                         />
                       ) : (
-                        <ImageIcon className="text-slate-400 w-8 h-8" />
+                        <ImageIcon className="text-slate-400 w-8 h-8 group-hover:scale-110 transition-transform duration-300" />
                       )}
                     </div>
-                    <span className="mt-1.5 text-[11px] sm:text-xs font-medium text-slate-700 text-center tracking-tight truncate w-full px-1 pb-0.5">
+                    <span className="mt-1.5 text-[11px] sm:text-xs font-medium tracking-tight px-1 pb-0.5 line-clamp-2 min-h-[2.5rem] break-words text-slate-800 group-hover:text-amber-600 transition-colors w-full">
                       {item.name}
                     </span>
-                  </div>
+                  </Link>
                 ))}
               </div>
             </div>
