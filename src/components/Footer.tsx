@@ -62,10 +62,10 @@ export default function Footer() {
 
   return (
     <footer className="w-full flex flex-col mt-auto shrink-0 bg-white text-slate-600 pt-16 pb-8 border-t border-slate-200/60 font-sans">
-      <div className="max-w-7xl mx-auto px-4 w-full">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Main Layout Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 lg:gap-12 py-10 text-slate-600">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 py-12 text-slate-600">
             
             {/* Column 1: Shop */}
             <div className="flex flex-col gap-4">
@@ -196,7 +196,7 @@ export default function Footer() {
               rel="noopener noreferrer" 
               className="text-amber-500 hover:underline font-medium transition-colors"
             >
-              Fixzen Solutions (www.fixzensolutions.com)
+              Fixzen Solutions
             </a>
           </div>
           <div className="flex items-center gap-4 text-slate-500 text-sm font-medium">
