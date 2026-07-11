@@ -26,9 +26,10 @@ export default async function Home() {
               </div>
               <h2 className="text-2xl md:text-3xl font-bold text-slate-900">Trending Wholesale Products</h2>
             </div>
-            <button className="hidden sm:block text-blue-600 font-semibold hover:text-blue-800 transition-colors">
-              Explore Catalog &rarr;
-            </button>
+            <Link href="/products" className="hidden sm:flex items-center gap-2 text-emerald-600 font-semibold hover:text-emerald-800 transition-colors">
+              Explore Catalog 
+              <span className="w-6 h-6 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center text-sm">&rarr;</span>
+            </Link>
           </div>
 
           {!trendingProducts || trendingProducts.length === 0 ? (
@@ -38,7 +39,7 @@ export default async function Home() {
           ) : (
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
               {trendingProducts.map((product) => (
-                <div key={product.id} className="bg-white rounded-2xl border border-slate-100/80 shadow-sm overflow-hidden hover:-translate-y-1.5 hover:shadow-md hover:border-slate-200/50 transition-all duration-300 ease-out flex flex-col h-full relative group">
+                <Link href={`/products/${product.id}`} key={product.id} className="bg-white rounded-2xl border border-slate-100/80 shadow-sm overflow-hidden hover:-translate-y-1.5 hover:shadow-md hover:border-slate-200/50 transition-all duration-300 ease-out flex flex-col h-full relative group block">
                   {/* Product Image */}
                   <div className="aspect-square bg-slate-50 relative overflow-hidden flex items-center justify-center p-4">
                     <img 
@@ -74,15 +75,15 @@ export default async function Home() {
                       </div>
                     </div>
                   </div>
-                </div>
+                </Link>
               ))}
             </div>
           )}
           
           <div className="mt-8 text-center sm:hidden">
-            <button className="w-full bg-white border border-slate-200 text-slate-700 font-semibold py-3 px-4 rounded-lg hover:bg-slate-50 transition-colors">
+            <Link href="/products" className="block w-full bg-white border border-slate-200 text-slate-700 font-semibold py-3 px-4 rounded-lg hover:bg-slate-50 transition-colors">
               Explore All Trending
-            </button>
+            </Link>
           </div>
         </section>
 
