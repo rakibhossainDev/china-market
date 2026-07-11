@@ -60,8 +60,8 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-[#F8FAFC] p-4">
-      <div className="w-full max-w-md bg-white border border-slate-100 p-6 sm:p-8 rounded-md shadow-sm flex flex-col items-center">
+    <div className="min-h-[calc(100vh-7rem)] flex items-start sm:items-center justify-center bg-white sm:bg-[#F8FAFC] p-0 sm:p-4">
+      <div className="w-full max-w-md bg-white border-0 sm:border border-slate-100 p-6 sm:p-8 rounded-none sm:rounded-md shadow-none sm:shadow-sm pt-12 sm:pt-8 flex flex-col items-center">
         
         {/* Brand Header */}
         <div className="mb-8 text-center">
