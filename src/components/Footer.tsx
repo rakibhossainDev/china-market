@@ -65,7 +65,7 @@ export default function Footer() {
       <div className="max-w-7xl mx-auto px-4 w-full">
         
         {/* Main Layout Grid */}
-        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-8 py-10 text-slate-600">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 lg:gap-12 py-10 text-slate-600">
             
             {/* Column 1: Shop */}
             <div className="flex flex-col gap-4">
@@ -116,16 +116,6 @@ export default function Footer() {
               </ul>
             </div>
 
-            {/* Column 4: China Market */}
-            <div className="flex flex-col gap-4">
-              <h4 className="text-slate-900 font-bold text-lg">China Market</h4>
-              <ul className="space-y-3 text-sm">
-                <li><Link href="/about" className="hover:text-slate-900 transition-colors">About Us</Link></li>
-                <li><Link href="/wholesale-program" className="hover:text-slate-900 transition-colors">Wholesale Program</Link></li>
-                <li><Link href="/success-stories" className="hover:text-slate-900 transition-colors">Success Stories</Link></li>
-                <li><Link href="/careers" className="hover:text-slate-900 transition-colors">Careers</Link></li>
-              </ul>
-            </div>
 
           {/* Newsletter & Social */}
           <div className="col-span-full lg:col-span-1 flex flex-col gap-6">
@@ -206,7 +196,7 @@ export default function Footer() {
               rel="noopener noreferrer" 
               className="text-amber-500 hover:underline font-medium transition-colors"
             >
-              Fixzen Solutions
+              Fixzen Solutions (www.fixzensolutions.com)
             </a>
           </div>
           <div className="flex items-center gap-4 text-slate-500 text-sm font-medium">
