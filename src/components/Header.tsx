@@ -1,17 +1,20 @@
 "use client";
 
-import { Search, Menu, ShoppingCart, Camera, Heart, User } from 'lucide-react';
+import { useState } from 'react';
+import { Search, Menu, ShoppingCart, Camera, Heart, User, ArrowLeft } from 'lucide-react';
 import Link from 'next/link';
 
 export default function Header({ onMenuClick }: { onMenuClick: () => void }) {
+  const [isSearchFocused, setIsSearchFocused] = useState(false);
+
   return (
-    <header className="bg-white sticky top-0 z-50 shadow-sm border-b border-slate-200">
+    <header className="bg-white sticky top-0 z-50 shadow-sm border-b border-slate-200 relative">
       {/* 
         Single Row Layout:
-        Mobile: compact gap-2 px-3 py-2
+        Mobile: standard row layout flex items-center justify-between w-full px-4 h-16
         Desktop: standard h-20 px-6/8
       */}
-      <div className="flex items-center justify-between gap-2 px-3 py-2 md:px-6 lg:px-8 md:h-20 md:gap-4 md:py-0">
+      <div className={`flex items-center justify-between w-full px-4 h-16 md:px-6 lg:px-8 md:h-20 md:gap-4 ${isSearchFocused ? 'hidden md:flex' : ''}`}>
         
         {/* Mobile: Hamburger & Logo Group */}
         <div className="flex items-center gap-2 md:hidden shrink-0">
@@ -25,15 +28,16 @@ export default function Header({ onMenuClick }: { onMenuClick: () => void }) {
           <span className="text-sm font-bold text-slate-900 flex-shrink-0 tracking-tight">CM</span>
         </div>
         
-        {/* Mobile Search Bar (flex-1 on mobile, hidden on desktop) */}
-        <div className="flex-grow flex-1 mx-1 relative md:hidden">
+        {/* Mobile Search Bar (Compact Trigger) */}
+        <div className="flex-grow flex-1 mx-2 relative md:hidden">
           <input
             type="text"
-            placeholder="Search products..."
-            className="w-full h-9 text-xs bg-slate-100 border-none rounded-full pl-8 pr-8 focus:outline-none focus:ring-2 focus:ring-amber-500"
+            placeholder="Search..."
+            onFocus={() => setIsSearchFocused(true)}
+            readOnly
+            className="w-full h-9 text-xs bg-slate-100 border-none rounded-full pl-8 pr-3 focus:outline-none cursor-text"
           />
-          <Search className="absolute left-2.5 top-1/2 -translate-y-1/2 text-slate-400 w-4 h-4" />
-          <Camera className="absolute right-2.5 top-1/2 -translate-y-1/2 text-slate-400 cursor-pointer w-4 h-4 hover:text-orange-500 transition-colors z-10" />
+          <Search className="absolute left-2.5 top-1/2 -translate-y-1/2 text-slate-400 w-4 h-4 pointer-events-none" />
         </div>
 
         {/* Desktop Search Bar (hidden on mobile, flex-1 on desktop) */}
@@ -58,6 +62,12 @@ export default function Header({ onMenuClick }: { onMenuClick: () => void }) {
             <Link href="/wishlist" className="p-1.5 md:p-2 text-slate-600 hover:text-[#F2A900] hover:bg-slate-100 rounded-full transition-colors hidden md:block" title="Wishlist">
               <Heart className="h-5 w-5 md:h-6 md:w-6" />
             </Link>
+            
+            {/* Mobile User Profile Slot */}
+            <Link href="/profile" className="p-1.5 text-slate-600 hover:text-[#F2A900] hover:bg-slate-100 rounded-full transition-colors md:hidden" title="Profile">
+              <User className="h-5 w-5" />
+            </Link>
+
             <Link href="/cart" className="relative p-1.5 md:p-2 text-slate-600 hover:text-[#F2A900] hover:bg-slate-100 rounded-full transition-colors inline-block" title="Cart">
               <ShoppingCart className="h-5 w-5 md:h-6 md:w-6" />
               <span className="absolute top-0 right-0 bg-[#F2A900] text-slate-950 text-[10px] md:text-xs font-bold w-4 h-4 rounded-full flex items-center justify-center border border-white">
@@ -81,6 +91,29 @@ export default function Header({ onMenuClick }: { onMenuClick: () => void }) {
           </div>
         </div>
       </div>
+
+      {/* Mobile Search Focus Takeover */}
+      {isSearchFocused && (
+        <div className="absolute inset-0 bg-white z-50 flex items-center px-4 gap-3 w-full h-full animate-in fade-in duration-200 md:hidden">
+          <button 
+            onClick={() => setIsSearchFocused(false)}
+            className="p-1.5 -ml-1 text-slate-600 hover:bg-slate-100 rounded-full transition-colors shrink-0"
+            aria-label="Cancel search"
+          >
+            <ArrowLeft className="h-5 w-5" />
+          </button>
+          
+          <div className="flex-grow relative flex items-center h-10">
+            <input
+              type="text"
+              autoFocus
+              placeholder="Search products..."
+              className="w-full h-full text-sm bg-slate-100 border-none rounded-full pl-4 pr-10 focus:outline-none focus:ring-2 focus:ring-[#F2A900]"
+            />
+            <Camera className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 cursor-pointer w-5 h-5 hover:text-[#F2A900] transition-colors z-10" />
+          </div>
+        </div>
+      )}
     </header>
   );
 }
