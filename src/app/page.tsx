@@ -4,6 +4,18 @@ import HeroSlider from '@/components/HeroSlider';
 import HorizontalCategoryGroups from '@/components/HorizontalCategoryGroups';
 import { supabase } from '@/lib/supabase';
 
+interface Product {
+  id: string;
+  title: string;
+  price: number;
+  old_price?: number;
+  moq: number;
+  stock: number;
+  images: string[];
+  category_id?: string;
+  sub_category_id?: string;
+}
+
 export const dynamic = 'force-dynamic';
 
 export default async function Home() {
@@ -12,7 +24,7 @@ export default async function Home() {
 
   const categoryBuckets = categories?.map(cat => ({
     ...cat,
-    products: allProducts?.filter(p => p.category_id === cat.id).slice(0, 8) || []
+    products: (allProducts?.filter(p => p.category_id === cat.id).slice(0, 8) || []) as Product[]
   })).filter(cat => cat.products.length > 0) || [];
 
   return (
@@ -48,7 +60,7 @@ export default async function Home() {
               </div>
 
               <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                {category.products.map((product) => (
+                {category.products.map((product: Product) => (
                   <Link href={`/products/${product.id}`} key={product.id} className="bg-white rounded-2xl border border-slate-100/80 shadow-sm overflow-hidden hover:-translate-y-1.5 hover:shadow-md hover:border-slate-200/50 transition-all duration-300 ease-out flex flex-col h-full relative group block">
                     {/* Product Image */}
                     <div className="relative w-full aspect-square bg-slate-50 overflow-hidden rounded-t-2xl">
