@@ -57,32 +57,32 @@ export default function ProfilePage() {
       {/* Menu Item List Grid (Enterprise Sharp Radius) */}
       <div className="w-full max-w-md bg-white border border-slate-100 rounded-md divide-y divide-slate-100 mt-4 shadow-sm overflow-hidden">
         
-        <Link href="/profile/orders" className="flex items-center justify-between p-4 hover:bg-slate-50 transition-colors">
+        <Link href="/admin/orders" className="flex items-center justify-between p-4 hover:bg-slate-50 transition-colors">
           <div className="flex items-center gap-3">
             <div className="p-2 bg-amber-50 text-amber-600 rounded-md">
               <ShoppingBag className="h-5 w-5" />
             </div>
-            <span className="text-sm font-medium text-slate-800">My Bulk Orders / আমার অর্ডার সমূহ</span>
+            <span className="text-sm font-medium text-slate-800">My Bulk Orders</span>
           </div>
           <ChevronRight className="h-5 w-5 text-slate-400" />
         </Link>
 
-        <Link href="/profile/sourcing" className="flex items-center justify-between p-4 hover:bg-slate-50 transition-colors">
+        <Link href="/sourcing" className="flex items-center justify-between p-4 hover:bg-slate-50 transition-colors">
           <div className="flex items-center gap-3">
             <div className="p-2 bg-blue-50 text-blue-600 rounded-md">
               <FileText className="h-5 w-5" />
             </div>
-            <span className="text-sm font-medium text-slate-800">Sourcing Requests / সোর্সিং রিকোয়েস্ট</span>
+            <span className="text-sm font-medium text-slate-800">Sourcing Requests</span>
           </div>
           <ChevronRight className="h-5 w-5 text-slate-400" />
         </Link>
 
-        <Link href="/profile/shipping" className="flex items-center justify-between p-4 hover:bg-slate-50 transition-colors">
+        <Link href="/profile/address" className="flex items-center justify-between p-4 hover:bg-slate-50 transition-colors">
           <div className="flex items-center gap-3">
             <div className="p-2 bg-emerald-50 text-emerald-600 rounded-md">
               <MapPin className="h-5 w-5" />
             </div>
-            <span className="text-sm font-medium text-slate-800">Shipping & Address / শিপিং ঠিকানা</span>
+            <span className="text-sm font-medium text-slate-800">Shipping & Address</span>
           </div>
           <ChevronRight className="h-5 w-5 text-slate-400" />
         </Link>
@@ -97,7 +97,7 @@ export default function ProfilePage() {
           }}
           className="w-full mt-6 bg-red-50 hover:bg-red-100 text-red-600 font-bold py-2.5 px-4 rounded text-sm transition-colors text-center border border-red-100"
         >
-          Log Out / সাইন আউট করুন
+          Log Out
         </button>
       </div>
       
