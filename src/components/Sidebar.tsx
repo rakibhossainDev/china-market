@@ -117,12 +117,12 @@ function SidebarContent({ isOpen, setIsOpen, isDesktopExpanded, setIsDesktopExpa
         `}
       >
         <div className={`flex items-center h-20 border-b border-slate-100 shrink-0 transition-all duration-300 ease-in-out ${isDesktopExpanded ? 'px-6 justify-between' : 'px-6 justify-between md:px-0 md:justify-center'}`}>
-          <div className={`flex items-center gap-2 ${!isDesktopExpanded ? 'md:hidden' : ''}`}>
-             <div className="w-8 h-8 bg-amber-500 rounded flex items-center justify-center font-bold text-slate-900 text-lg shrink-0">
+          <Link href="/" className={`flex items-center gap-2.5 group cursor-pointer select-none hover:opacity-90 transition-opacity ${!isDesktopExpanded ? 'md:hidden' : ''}`}>
+             <div className="w-8 h-8 bg-amber-500 rounded flex items-center justify-center font-bold text-slate-900 text-lg shrink-0 transition-transform group-hover:scale-105">
                 CM
              </div>
              <span className="font-bold text-xl tracking-tight whitespace-nowrap">China Market</span>
-          </div>
+          </Link>
           
           <button className="md:hidden" onClick={() => setIsOpen(false)}>
             <X className="h-6 w-6 text-slate-600" />

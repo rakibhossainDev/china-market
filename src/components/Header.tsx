@@ -25,7 +25,9 @@ export default function Header({ onMenuClick }: { onMenuClick: () => void }) {
           >
             <Menu className="h-5 w-5" />
           </button>
-          <span className="text-sm font-bold text-slate-900 flex-shrink-0 tracking-tight">CM</span>
+          <Link href="/" className="text-sm font-bold text-slate-900 flex-shrink-0 tracking-tight hover:opacity-90 transition-opacity cursor-pointer select-none">
+            CM
+          </Link>
         </div>
         
         {/* Mobile Search Bar (Compact Trigger) */}
