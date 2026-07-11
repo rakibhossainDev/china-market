@@ -35,7 +35,7 @@ export default function Header({ onMenuClick }: { onMenuClick: () => void }) {
             placeholder="Search..."
             onFocus={() => setIsSearchFocused(true)}
             readOnly
-            className="w-full h-9 text-xs bg-slate-100 border-none rounded-full pl-8 pr-3 focus:outline-none cursor-text"
+            className="w-full h-9 text-xs bg-slate-100 border-none rounded-md pl-8 pr-3 focus:outline-none cursor-text"
           />
           <Search className="absolute left-2.5 top-1/2 -translate-y-1/2 text-slate-400 w-4 h-4 pointer-events-none" />
         </div>
@@ -46,11 +46,11 @@ export default function Header({ onMenuClick }: { onMenuClick: () => void }) {
             <input
               type="text"
               placeholder="Search products by name, SKU, or category..."
-              className="w-full bg-slate-100 text-slate-900 rounded-full py-2.5 pl-12 pr-[120px] focus:outline-none focus:ring-2 focus:ring-[#F2A900] transition-shadow"
+              className="w-full bg-slate-100 text-slate-900 rounded-md py-2.5 pl-12 pr-[120px] focus:outline-none focus:ring-2 focus:ring-[#F2A900] transition-shadow"
             />
             <Search className="absolute left-4 top-3 h-5 w-5 text-slate-400" />
             <Camera className="absolute right-24 top-1/2 -translate-y-1/2 text-slate-400 cursor-pointer hover:text-[#F2A900] transition-colors z-10" />
-            <button className="absolute right-1 top-1 bg-[#F2A900] hover:bg-[#D99700] text-slate-950 font-semibold py-1.5 px-4 rounded-full transition-colors text-sm">
+            <button className="absolute right-1 top-1 bg-[#F2A900] hover:bg-[#D99700] text-slate-950 font-semibold py-1.5 px-4 rounded-md transition-colors text-sm">
               Search
             </button>
           </div>
@@ -63,16 +63,16 @@ export default function Header({ onMenuClick }: { onMenuClick: () => void }) {
               <Heart className="h-5 w-5 md:h-6 md:w-6" />
             </Link>
             
-            {/* Mobile User Profile Slot */}
-            <Link href="/profile" className="p-1.5 text-slate-600 hover:text-[#F2A900] hover:bg-slate-100 rounded-full transition-colors md:hidden" title="Profile">
-              <User className="h-5 w-5" />
-            </Link>
-
             <Link href="/cart" className="relative p-1.5 md:p-2 text-slate-600 hover:text-[#F2A900] hover:bg-slate-100 rounded-full transition-colors inline-block" title="Cart">
               <ShoppingCart className="h-5 w-5 md:h-6 md:w-6" />
               <span className="absolute top-0 right-0 bg-[#F2A900] text-slate-950 text-[10px] md:text-xs font-bold w-4 h-4 rounded-full flex items-center justify-center border border-white">
                 0
               </span>
+            </Link>
+
+            {/* Mobile User Profile Slot */}
+            <Link href="/profile" className="p-1.5 text-slate-600 hover:text-[#F2A900] hover:bg-slate-100 rounded-full transition-colors md:hidden" title="Profile">
+              <User className="h-5 w-5" />
             </Link>
           </div>
 
@@ -94,7 +94,7 @@ export default function Header({ onMenuClick }: { onMenuClick: () => void }) {
 
       {/* Mobile Search Focus Takeover */}
       {isSearchFocused && (
-        <div className="absolute inset-0 bg-white z-50 flex items-center px-4 gap-3 w-full h-full animate-in fade-in duration-200 md:hidden">
+        <div className="fixed top-0 inset-x-0 h-16 bg-white z-50 flex items-center px-4 gap-3 w-full border-b border-slate-100 animate-in slide-in-from-top duration-200 md:hidden">
           <button 
             onClick={() => setIsSearchFocused(false)}
             className="p-1.5 -ml-1 text-slate-600 hover:bg-slate-100 rounded-full transition-colors shrink-0"
@@ -108,7 +108,7 @@ export default function Header({ onMenuClick }: { onMenuClick: () => void }) {
               type="text"
               autoFocus
               placeholder="Search products..."
-              className="w-full h-full text-sm bg-slate-100 border-none rounded-full pl-4 pr-10 focus:outline-none focus:ring-2 focus:ring-[#F2A900]"
+              className="w-full h-full text-sm bg-slate-100 border-none rounded-md pl-4 pr-10 focus:outline-none focus:ring-2 focus:ring-[#F2A900]"
             />
             <Camera className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 cursor-pointer w-5 h-5 hover:text-[#F2A900] transition-colors z-10" />
           </div>
