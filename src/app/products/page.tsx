@@ -22,7 +22,7 @@ export default async function ProductsPage({ searchParams }: Props) {
     query = query.eq('sub_category_id', subId);
   }
 
-  const { data: products, error } = await query;
+  const { data: products, error } = await query.order('created_at', { ascending: false });
 
   if (error) {
     console.error("Error fetching products:", error);
@@ -46,7 +46,7 @@ export default async function ProductsPage({ searchParams }: Props) {
             <Link key={product.id} href={`/products/${product.id}`} className="group block bg-white rounded-2xl border border-slate-100 shadow-sm overflow-hidden hover:shadow-md transition-shadow focus:outline-none focus:ring-2 focus:ring-[#F2A900] focus:ring-inset">
               <div className="aspect-square bg-slate-50 relative overflow-hidden flex items-center justify-center p-2">
                 <img 
-                  src={product.images?.[0] || 'https://via.placeholder.com/300'} 
+                  src={product.images && product.images.length > 0 ? product.images[0] : '/placeholder-image.png'} 
                   alt={product.title} 
                   className="w-full h-full object-cover rounded-xl"
                 />
@@ -54,11 +54,16 @@ export default async function ProductsPage({ searchParams }: Props) {
               <div className="p-4 flex flex-col justify-between">
                 <div>
                   <h3 className="font-semibold text-slate-800 text-sm mb-1 line-clamp-2 group-hover:text-amber-600 transition-colors">{product.title}</h3>
-                  <div className="text-lg font-bold text-slate-900 mt-2">${product.price?.toFixed(2)}</div>
+                  <div className="flex items-baseline gap-2 mt-2">
+                    <span className="text-lg font-bold text-slate-900">৳{product.price?.toFixed(2) || '0.00'}</span>
+                    {product.old_price && (
+                      <span className="text-sm text-slate-400 line-through">৳{product.old_price.toFixed(2)}</span>
+                    )}
+                  </div>
                 </div>
                 <div className="mt-3 flex items-center justify-between text-xs text-slate-500">
-                  <span className="font-medium bg-slate-100 px-2 py-1 rounded">MOQ: {product.moq}</span>
-                  <span>Stock: {product.stock}</span>
+                  <span className="font-medium bg-slate-100 px-2 py-1 rounded">MOQ: {product.moq || 1}</span>
+                  <span>Stock: {product.stock || 0}</span>
                 </div>
               </div>
             </Link>
